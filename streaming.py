@@ -6,16 +6,6 @@
 import tweepy
 import sqlite3
 from pprint import pprint
-import json
-
-# Setup twitter API access
-consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
-consumer_secret = 'TuTQKld9os111vx7oMSM3PTfoNz9dZDcnACxIvHGL9euIvLE8I'
-access_token = '74265344-UOJgWD9vzB9wJvgnet3f63bkQdJ0rLGz9gg67fqDP'
-access_secret = '4AFqod7kCScnSDf9OcgmVeIdnxwa9ZKn9pwwFMBbpLi7u'
-
-# Setup sqlite
-sqlite_file = 'hyper.db'
 
 # Class that manages the events received from streaming API
 class TweetsListener(tweepy.StreamListener):
@@ -26,6 +16,7 @@ class TweetsListener(tweepy.StreamListener):
         tweet_info = status._json;
 
         # print the tweet in console
+        print("Received tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
         # pprint(tweet_info)
         # print(tweet_info['id_str'])
 
@@ -33,15 +24,13 @@ class TweetsListener(tweepy.StreamListener):
         connection = sqlite3.connect(sqlite_file)
         db = connection.cursor()
 
-        print("Trying to save tweet {} info into DB".format(tweet_info['id_str']))
-
         # Store the tweet in DB
         try:
             db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
                         VALUES ('{tweetId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                             tweetId=tweet_info['id_str'], \
                             createdAt=tweet_info['created_at'], \
-                            tweetText=tweet_info['text'], \
+                            tweetText=tweet_info['text'].replace("'","''"), \
                             favsCount=tweet_info['favorite_count'], \
                             rtsCount=tweet_info['retweet_count'], \
                             language=tweet_info['lang'], \
@@ -52,7 +41,7 @@ class TweetsListener(tweepy.StreamListener):
                             userLocation=tweet_info['user']['location']) \
             )
         except sqlite3.Error as e:
-            print("Error: ", e)
+            print("####################\nError: {}\n####################\n".format(e))
 
         # Commit and close
         connection.commit()
@@ -66,17 +55,25 @@ class TweetsListener(tweepy.StreamListener):
         print("Error TweetsListener:on_error => %s" % str(status))
         return True
 
-if __name__ == '__main__':
+
+# Setup twitter API access
+consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
+consumer_secret = 'TuTQKld9os111vx7oMSM3PTfoNz9dZDcnACxIvHGL9euIvLE8I'
+access_token = '74265344-UOJgWD9vzB9wJvgnet3f63bkQdJ0rLGz9gg67fqDP'
+access_secret = '4AFqod7kCScnSDf9OcgmVeIdnxwa9ZKn9pwwFMBbpLi7u'
+
+# Setup sqlite
+sqlite_file = 'hyper.db'
     
-    # Manage twitter API access
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
+# Manage twitter API access
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_secret)
 
-    # Create tweepy instance
-    api = tweepy.API(auth)
+# Create tweepy instance
+api = tweepy.API(auth)
 
-    # Setup streaming
-    twitter_stream = tweepy.Stream(auth, TweetsListener())
+# Setup streaming
+twitter_stream = tweepy.Stream(auth, TweetsListener())
 
-    # Launch streaming
-    twitter_stream.filter(track=['#python'])
+# Launch streaming
+twitter_stream.filter(track=['#trump'])
