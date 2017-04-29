@@ -1,23 +1,32 @@
+# https://marcobo# https://www.dataquest.io/blog/streaming-data-python/
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
 # http://adilmoujahid.com/posts/2014/07/twitter-analytics/
-# https://www.dataquest.io/blog/streaming-data-python/
 # http://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html
 
 import tweepy
 import sqlite3
 from pprint import pprint
 
+# track number of tweets (developing purposes)
+max_tweets_to_store = 1 # maximum number of tweets to store before shutting down the streaming
+
 # Class that manages the events received from streaming API
 class TweetsListener(tweepy.StreamListener):
  
+    def __init__(self):
+        """ Initialize listener """
+        self.count = 0
+        super(TweetsListener, self).__init__()
+    
     def on_status(self, status):
         """ Manage 'status' event."""
 
+        self.count = self.count + 1
+
         tweet_info = status._json;
 
-        # print the tweet in console
         print("Received tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
-        # pprint(tweet_info)
+        #pprint(status)
         # print(tweet_info['id_str'])
 
         # Connect to the database sqlite file
@@ -26,9 +35,10 @@ class TweetsListener(tweepy.StreamListener):
 
         # Store the tweet in DB
         try:
-            db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
-                        VALUES ('{tweetId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
+            db.execute("INSERT INTO TweetsRaw (tweetId,userId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
+                        VALUES ('{tweetId}','{userId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                             tweetId=tweet_info['id_str'], \
+                            userId=tweet_info['user']['id_str'], \
                             createdAt=tweet_info['created_at'], \
                             tweetText=tweet_info['text'].replace("'","''"), \
                             favsCount=tweet_info['favorite_count'], \
@@ -46,7 +56,11 @@ class TweetsListener(tweepy.StreamListener):
         # Commit and close
         connection.commit()
         connection.close()
-        
+
+        # shut down streaming if maximum number of tweets has been reached
+        if self.count == max_tweets_to_store:
+            return False
+
         return True
  
     def on_error(self, status):
