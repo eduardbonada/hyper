@@ -1,5 +1,6 @@
 import tweepy
 import sqlite3
+from datetime import datetime
 from pprint import pprint
 
 # Setup twitter API access
@@ -36,15 +37,16 @@ for st in searched_tweets:
 
         print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
 
-        db.execute("INSERT INTO TweetsRaw (tweetId,userId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
-                    VALUES ('{tweetId}','{userId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
+        db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
+                    VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                         tweetId=tweet_info['id_str'], \
-                        userId=tweet_info['user']['id_str'], \
                         createdAt=tweet_info['created_at'], \
+                        storedAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), \
                         tweetText=tweet_info['text'].replace("'","''"), \
                         favsCount=tweet_info['favorite_count'], \
                         rtsCount=tweet_info['retweet_count'], \
                         language=tweet_info['lang'], \
+                        userId=tweet_info['user']['id_str'], \
                         userFriendsCount=tweet_info['user']['friends_count'], \
                         userFollowersCount=tweet_info['user']['followers_count'], \
                         userStatusesCount=tweet_info['user']['statuses_count'], \
