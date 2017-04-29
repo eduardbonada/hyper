@@ -24,7 +24,7 @@ db = connection.cursor()
 
 # search tweets
 query = 'primavera sound'
-max_tweets = 100
+max_tweets = 10
 searched_tweets = [status for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
 
 print("Found {} tweets about '{}'".format(len(searched_tweets), query))
@@ -36,9 +36,10 @@ for st in searched_tweets:
 
         print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
 
-        db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
-                    VALUES ('{tweetId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
+        db.execute("INSERT INTO TweetsRaw (tweetId,userId,createdAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
+                    VALUES ('{tweetId}','{userId}','{createdAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                         tweetId=tweet_info['id_str'], \
+                        userId=tweet_info['user']['id_str'], \
                         createdAt=tweet_info['created_at'], \
                         tweetText=tweet_info['text'].replace("'","''"), \
                         favsCount=tweet_info['favorite_count'], \
