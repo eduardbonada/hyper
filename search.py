@@ -25,7 +25,7 @@ db = connection.cursor()
 
 # search tweets
 query = 'primavera sound'
-max_tweets = 10
+max_tweets = 5
 searched_tweets = [status for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
 
 print("Found {} tweets about '{}'".format(len(searched_tweets), query))
@@ -51,7 +51,7 @@ for st in searched_tweets:
                         userFollowersCount=tweet_info['user']['followers_count'], \
                         userStatusesCount=tweet_info['user']['statuses_count'], \
                         userFavsCount=tweet_info['user']['favourites_count'], \
-                        userLocation=tweet_info['user']['location']) \
+                        userLocation=tweet_info['user']['location'].replace("'","''")) \
         )
     except sqlite3.Error as e:
         print("Error: ", e)

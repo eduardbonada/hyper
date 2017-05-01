@@ -1,5 +1,5 @@
-from datetime import datetime
+import random
+import string
 
-print(datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"))
-
-"Sat Apr 29 08:06:26 +0000 2017"
+for i in range(1,20):
+	print(random.choice(string.printable))

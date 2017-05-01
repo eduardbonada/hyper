@@ -50,7 +50,7 @@ class TweetsListener(tweepy.StreamListener):
                             userFollowersCount=tweet_info['user']['followers_count'], \
                             userStatusesCount=tweet_info['user']['statuses_count'], \
                             userFavsCount=tweet_info['user']['favourites_count'], \
-                            userLocation=tweet_info['user']['location']) \
+                            userLocation=tweet_info['user']['location'].replace("'","''")) \
             )
         except sqlite3.Error as e:
             print("####################\nError: {}\n####################\n".format(e))
