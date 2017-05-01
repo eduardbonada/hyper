@@ -1,3 +1,7 @@
+"""
+Script that listens tweets from the Twitter Streaming API (according to searching query) and stores them into the given sqlite db
+"""
+
 # https://marcobo# https://www.dataquest.io/blog/streaming-data-python/
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
 # http://adilmoujahid.com/posts/2014/07/twitter-analytics/

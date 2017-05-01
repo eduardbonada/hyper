@@ -1,3 +1,7 @@
+"""
+Script that generates random tweets including text, bands, mentions, hashtags, urls, ...
+"""
+
 import sqlite3
 import random
 import string

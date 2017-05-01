@@ -1,3 +1,7 @@
+"""
+Script that searches tweets according to searching query and stores them into the given sqlite db
+"""
+
 import tweepy
 import sqlite3
 from datetime import datetime
