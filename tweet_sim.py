@@ -5,7 +5,8 @@ Script that generates random tweets including text, bands, mentions, hashtags, u
 import sqlite3
 import random
 import string
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 total_num_tweets = 1000 # total number of fake tweets to create
 
@@ -123,12 +124,18 @@ for t in range(1, total_num_tweets+1):
 	tweet_text = ' '.join(tweet_text_list)
 	#print(tweet_text)
 
+	# create a random creation date
+	days_offset = random.randint(0,7)
+	hours_offset = random.randint(0,24)
+	minutes_offset = random.randint(0,60)
+	createdAt = (datetime.now() - timedelta(days=days_offset, hours=hours_offset, minutes=minutes_offset)).strftime("%a %b %d %H:%M:%S +0200 %Y")
+
 	# add generated tweet into db
 	try:
 		db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
 		            VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
 		                tweetId=0, \
-		                createdAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), \
+		                createdAt=createdAt, \
 		                storedAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), \
 		                tweetText=tweet_text.replace("'","''"), \
 		                favsCount=random.randint(0,100), \
