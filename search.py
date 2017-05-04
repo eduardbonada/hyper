@@ -7,6 +7,10 @@ import sqlite3
 from datetime import datetime
 from pprint import pprint
 
+# script parameters
+query = 'primavera sound'
+max_tweets = 5
+
 # Setup twitter API access
 consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
 consumer_secret = 'TuTQKld9os111vx7oMSM3PTfoNz9dZDcnACxIvHGL9euIvLE8I'
@@ -28,8 +32,6 @@ connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 # search tweets
-query = 'primavera sound'
-max_tweets = 5
 searched_tweets = [status for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
 
 print("Found {} tweets about '{}'".format(len(searched_tweets), query))
@@ -41,7 +43,7 @@ for st in searched_tweets:
 
         print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
 
-        db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
+        db.execute("INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
                     VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                         tweetId=tweet_info['id_str'], \
                         createdAt=tweet_info['created_at'], \
@@ -57,6 +59,7 @@ for st in searched_tweets:
                         userFavsCount=tweet_info['user']['favourites_count'], \
                         userLocation=tweet_info['user']['location'].replace("'","''")) \
         )
+
     except sqlite3.Error as e:
         print("Error: ", e)
 
