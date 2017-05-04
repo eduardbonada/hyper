@@ -5,19 +5,31 @@ Script that generates random tweets including text, bands, mentions, hashtags, u
 import sqlite3
 import random
 import string
+import json
+import sys
 from datetime import datetime, timedelta
 
+# setup simulator
+total_num_tweets 	= 1000
+start_date 			= '27/05/2017'
+start_time 			= '12:00' # UTC TIME
+end_date 			= '28/05/2017'
+end_time 			= '12:00' # UTC TIME
 
-total_num_tweets = 1000 # total number of fake tweets to create
+# setup start and end dates
+start = datetime(int(start_date.split('/')[2]), int(start_date.split('/')[1]), int(start_date.split('/')[0]),\
+				 int(start_time.split(':')[0]), int(start_time.split(':')[1]))
+end   = datetime(int(end_date.split('/')[2]), int(end_date.split('/')[1]), int(end_date.split('/')[0]),\
+				 int(end_time.split(':')[0]), int(end_time.split(':')[1]))
+time_range = (end - start).total_seconds()
 
-bands = [\
-			{"name" : "Arcade Fire", "twitter" : "@arcadefire"},\
-			{"name" : "Bon Iver", "twitter" : "@boniver"},\
-			{"name" : "Mishima", "twitter" : "@mishima"},\
-			{"name" : "!!!", "twitter" : "@chkchkchk"},\
-			{"name" : "Animic", "twitter" : "@animic"}\
-		 ]
+print("Start generating {} tweets from '{}' until '{}'".format(total_num_tweets, start, end))
 
+# collect list of bands
+json_data=open('bands.json').read()
+bands = json.loads(json_data)
+
+# tweet text eligible to add
 texts = [\
 			"Lorem ipsum dolor sit l'amet", \
 			"consectetur adipiscing  ÀÈÌÒÙ lit", \
@@ -125,10 +137,12 @@ for t in range(1, total_num_tweets+1):
 	#print(tweet_text)
 
 	# create a random creation date
-	days_offset = random.randint(0,7)
-	hours_offset = random.randint(0,24)
-	minutes_offset = random.randint(0,60)
-	createdAt = (datetime.now() - timedelta(days=days_offset, hours=hours_offset, minutes=minutes_offset)).strftime("%a %b %d %H:%M:%S +0200 %Y")
+	offset = random.randint(0,time_range)
+	createdAt = (start + timedelta(seconds=offset)).strftime("%a %b %d %H:%M:%S +0200 %Y")
+	#days_offset = random.randint(0,7)
+	#hours_offset = random.randint(0,24)
+	#minutes_offset = random.randint(0,60)
+	#createdAt = (datetime.now() - timedelta(days=days_offset, hours=hours_offset, minutes=minutes_offset)).strftime("%a %b %d %H:%M:%S +0200 %Y")
 
 	# add generated tweet into db
 	try:

@@ -5,6 +5,9 @@ Script that adds the bands into the db
 import sqlite3
 import string
 import unicodedata
+import json
+from pprint import pprint
+import sys	
 
 # Setup sqlite
 sqlite_file = 'hyper.db'
@@ -14,13 +17,9 @@ connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 # collect list of bands
-bands = [\
-			{"id": 1, "name" : "Arcade Fire", "twitter" : "@arcadefire"},\
-			{"id": 2, "name" : "Bon Iver", "twitter" : "@boniver"},\
-			{"id": 3, "name" : "Mishima", "twitter" : "@mishima"},\
-			{"id": 4, "name" : "!!!", "twitter" : "@chkchkchk"},\
-			{"id": 5, "name" : "Anímic", "twitter" : "@animic"}\
-		 ]
+json_data=open('bands.json').read()
+bands = json.loads(json_data)
+pprint(bands)
 
 # delete all entries and reset id
 db.execute("DELETE FROM Bands")
@@ -42,8 +41,7 @@ for b in bands:
 				        id=b['id'], \
 				        name=bandname, \
 				        codedName=bandname_lowercase_no_spaces_no_accents, \
-				        twitterName=b['twitter']
-				        ) \
+				        twitterName=b['twitter'])
 		)
 		connection.commit()
 	except sqlite3.Error as e:

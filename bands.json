@@ -1,0 +1,12 @@
+[
+	{"id": 1, "name" : "Arcade Fire", "twitter" : "@arcadefire"},
+	{"id": 2, "name" : "Bon Iver", "twitter" : "@boniver"},
+	{"id": 3, "name" : "Mishima", "twitter" : "@mishima"},
+	{"id": 4, "name" : "!!!", "twitter" : "@chkchkchk"},
+	{"id": 5, "name" : "Anímic", "twitter" : "@animic"},
+	{"id": 6, "name" : "7 Notas 7 Colores", "twitter" : "@7notas7colores"},
+	{"id": 7, "name" : "The Afghan Whigs", "twitter" : "@theafghanwhigs"},
+	{"id": 8, "name" : "Angel Olsen", "twitter" : "@angelolsen"},
+	{"id": 9, "name" : "Aurora Halal", "twitter" : "@aurorahalal"},
+	{"id": 10, "name" : "Converge", "twitter" : "@Ccnverge"}
+]
