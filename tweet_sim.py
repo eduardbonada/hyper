@@ -148,7 +148,7 @@ for t in range(1, total_num_tweets+1):
 	try:
 		db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
 		            VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
-		                tweetId=0, \
+		                tweetId=t, \
 		                createdAt=createdAt, \
 		                storedAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), \
 		                tweetText=tweet_text.replace("'","''"), \
