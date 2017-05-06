@@ -19,7 +19,7 @@ db = connection.cursor()
 # collect list of bands
 json_data=open('bands.json').read()
 bands = json.loads(json_data)
-pprint(bands)
+#pprint(bands)
 
 # delete all entries and reset id
 db.execute("DELETE FROM Bands")
@@ -34,13 +34,15 @@ for b in bands:
 	bandname_lowercase_no_spaces = ''.join(bandname_lowercase.split())
 	bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
 
+	print("Adding band {} | {} | {} | {} ".format(b['id'], bandname, bandname_lowercase_no_spaces_no_accents, b['twitter']))
+
 	# store band into db
 	try:
 		db.execute("INSERT INTO Bands (id,name,codedName,twitterName) \
 					VALUES ('{id}','{name}','{codedName}','{twitterName}')".format(\
 				        id=b['id'], \
-				        name=bandname, \
-				        codedName=bandname_lowercase_no_spaces_no_accents, \
+				        name=bandname.replace("'","''"), \
+				        codedName=bandname_lowercase_no_spaces_no_accents.replace("'","''"), \
 				        twitterName=b['twitter'])
 		)
 		connection.commit()

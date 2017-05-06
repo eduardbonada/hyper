@@ -40,7 +40,7 @@ class TweetsListener(tweepy.StreamListener):
 
         # Store the tweet in DB
         try:
-            db.execute("INSERT INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userId,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
+            db.execute("INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userId,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
                         VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
                             tweetId=tweet_info['id_str'], \
                             createdAt=tweet_info['created_at'], \

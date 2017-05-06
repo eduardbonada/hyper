@@ -1,257 +1,269 @@
-!!! (Chk Chk Chk)
-7 Notas 7 Colores
-Abdulla Rashim 
-About Leaving
-The Afghan Whigs
-Against Me!
-Agorazein
-Aldrin y Collins
-Alex Cameron
-Alexandra Savior
-Alexis Taylor dj set
-Alien Tango
-All Indians No Chief
-Âme live
-Angel Olsen
-Angela
-Anímic
-Annette Peacock
-Aphex Twin
-Arcade Fire
-Aries
-Aurora Halal
-Autarkic live
-Avalon Emerson
-BADBADNOTGOOD
-Barbott
-Belako
-Belushi
-Ben UFO
-Berri Txarrak
-Bicep live
-The Black Angels
-Bolga
-Bon Iver
-Broken Social Scene
-Cigarettes After Sex
-CLUBZ
-Cocaine Piss
-Dj Coco
-Conttra
-Converge
-The Crab Apples
-Cymbals Eat Guitars
-The Damned
-Dave P.
-Death Grips
-Descendents
-Dirty Porko & Crie930
-Discos Paradiso Crew
-Dixon
-Don't DJ
-Donallop
-Dj Dustin
-El Petit de Cal Eril
-ELMINI
-Elza Soares
-Evripidis And His Tragedies
-Fairmont live
-Fatima Yamaha
-Ferenc
-Flying Lotus
-Formation
-Frank Ocean
-Front 242
-Fufanu
-Gas
-Glass Animals
-Gojira
-Golden Bug
-Gordi
-Grace Jones
-Grandaddy
-The Growlers
-Hamilton Leithauser
-The Harlock
-Henrik Schwarz
-Her Little Donkey
-Huerco S.
-HVOB
-Ian Pooley
-InnerCut
-Iosonouncane
-It's Not Not
-Jackmaster
-Japandroids
-Jardín de la Croix
-Jazz
-Jeremy Jay
-JMII
-Joey Purp
-John Talabot
-Joy Orbison
-Julia Jacklin
-Julie Doiron
-Junun
-Kate Tempest
-Keems
-Kelly Lee Owens
-Kepa Junkera & Los Hermanos Cubero
-Kevin Morby
-Khidja live
-Kiasmos dj set
-King Gizzard & The Lizard Wizard
-King Krule
-KiNK live
-Kokoshca
-Kornél Kovács 
-Lady Wray
-Lauer
-Les Cruet
-Les Sueques
-Let's Eat Grandma
-Local Natives
-Lord Of The Isles
-Lvl Up
-Mac DeMarco
-The Magnetic Fields
-The Make-Up
-Mannequin Pussy
-Màquina Total
-Marc Piñol
-Maresme
-Marie Davidson
-Marta Delmont
-Marvin & Guy
-Matrixxman
-Medalla
-Melange
-Metronomy
-Michael Mayer
-Miguel
-Mishima
-Mitski
-The  Molochs
-Moscoman live band
-Muñeco
-Murdoc
-Museless
-The Mystery Lights
-Neleonard
-Nikki Lane
-No Crafts
-No Zu 
-Noga Erez 
-Nots
-Ocellot
-Odina
-Operators
-Papá Topo
-Patrick Codenys (Front 242)
-PAVVLA
-Pearson Sound
-Pedro Vian
-Pender Street Steppers
-Phurpa
-Pinegrove
-Playback Maracas
-Polar Inertia
-Polseguera
-Pond
-Preoccupations
-Priests
-Rebuig
-Recondite live
-Regalim
-Retirada!
-Romare live
-Rosalía & Raül Refree
-Royal Trux
-Run The Jewels
-Ryder The Eagle
-S U R V I V E
-Saint Etienne
-SALFVMAN
-Sampha
-Sau Poler
-Seu Jorge
-Shelby Grey
-Shellac
-Silent James
-Sinkane
-Skepta
-Skinny Puppy
-Slayer
-Sleaford Mods
-Sleep
-Slim Cessna's Auto Club
-Solange
-Soledad Vélez
-Sorry Kate
-Swans
-Swet Shop Boys
-Talaboman
-Teenage Fanclub
-Dj Tennis
-This Is Not This Heat
-Triángulo de Amor Bizarro
-Tuff City Kids
-Tycho
-Vaadat Charigim 
-vàlius + Carlota Serrahima
-Van Morrison
-Vladimir Ivkovic
-Vox Low
-Wand
-The Waterparties
-The Wave Pictures
-The Wedding Present
-Weval
-Weyes Blood
-The Wheels
-Whitney
-Wild Beasts
-William Tyler
-The xx
-Youandewan
-Young Marco
-The Zombies
-Adelaida
-Aeromoças e Tenistas Russas
-Astronaut Project 
-BIKE
-Billy Carter
-De Mónaco
-DIEALRIGHT
-Entropia
-Escorpio
-FingerFingerrr
-G-C
-Gold Class
-Hanba!
-Inzul
-JAAA!
-Joel Sarakula
-Leyya
-Lígula
-Liniker e os Caramelows
-Marley BloO
-Marrakesh
-Me & The Plant
-Meridian Response
-Miss Garrison
-no metal in this battle
-PATiENTS
-Persian Pelican
-Prairie WWWW
-Radio 123
-RBP
-Riviere
-SHAO
-Sharman Den
-Shijo X
-Skegss
-Tiê
-Tired Lion
-Tourista
-Wrongonyou
+[
+{"id":1,"name":"!!!","twitter":"@chkchkchk"},
+{"id":2,"name":"7 Notas 7 Colores","twitter":"@???"},
+{"id":3,"name":"Abdulla Rashim","twitter":"@???"},
+{"id":4,"name":"About Leaving","twitter":"@???"},
+{"id":5,"name":"The Afghan Whigs","twitter":"@???"},
+{"id":6,"name":"Against Me!","twitter":"@???"},
+{"id":7,"name":"Agorazein","twitter":"@???"},
+{"id":8,"name":"Aldrin y Collins","twitter":"@???"},
+{"id":9,"name":"Alex Cameron","twitter":"@???"},
+{"id":10,"name":"Alexandra Savior","twitter":"@???"},
+{"id":11,"name":"Alexis Taylor","twitter":"@???"},
+{"id":12,"name":"Alien Tango","twitter":"@???"},
+{"id":13,"name":"All Indians No Chief","twitter":"@???"},
+{"id":14,"name":"Âme live","twitter":"@???"},
+{"id":15,"name":"Angel Olsen","twitter":"@???"},
+{"id":16,"name":"Angela","twitter":"@???"},
+{"id":17,"name":"Anímic","twitter":"@???"},
+{"id":18,"name":"Annette Peacock","twitter":"@???"},
+{"id":19,"name":"Aphex Twin","twitter":"@???"},
+{"id":20,"name":"Arcade Fire","twitter":"@???"},
+{"id":21,"name":"Aries","twitter":"@???"},
+{"id":22,"name":"Aurora Halal","twitter":"@???"},
+{"id":23,"name":"Autarkic live","twitter":"@???"},
+{"id":24,"name":"Avalon Emerson","twitter":"@???"},
+{"id":25,"name":"BADBADNOTGOOD","twitter":"@???"},
+{"id":26,"name":"Barbott","twitter":"@???"},
+{"id":27,"name":"Belako","twitter":"@???"},
+{"id":28,"name":"Belushi","twitter":"@???"},
+{"id":29,"name":"Ben UFO","twitter":"@???"},
+{"id":30,"name":"Berri Txarrak","twitter":"@???"},
+{"id":31,"name":"Bicep live","twitter":"@???"},
+{"id":32,"name":"The Black Angels","twitter":"@???"},
+{"id":33,"name":"Bolga","twitter":"@???"},
+{"id":34,"name":"Bon Iver","twitter":"@???"},
+{"id":35,"name":"Broken Social Scene","twitter":"@???"},
+{"id":36,"name":"Cigarettes After Sex","twitter":"@???"},
+{"id":37,"name":"CLUBZ","twitter":"@???"},
+{"id":38,"name":"Cocaine Piss","twitter":"@???"},
+{"id":39,"name":"Dj Coco","twitter":"@???"},
+{"id":40,"name":"Conttra","twitter":"@???"},
+{"id":41,"name":"Converge","twitter":"@???"},
+{"id":42,"name":"The Crab Apples","twitter":"@???"},
+{"id":43,"name":"Cymbals Eat Guitars","twitter":"@???"},
+{"id":44,"name":"The Damned","twitter":"@???"},
+{"id":45,"name":"Dave P.","twitter":"@???"},
+{"id":46,"name":"Death Grips","twitter":"@???"},
+{"id":47,"name":"Descendents","twitter":"@???"},
+{"id":48,"name":"Dirty Porko & Crie930","twitter":"@???"},
+{"id":49,"name":"Dirty Porko","twitter":"@???"},
+{"id":50,"name":"Crie930","twitter":"@???"},
+{"id":51,"name":"Discos Paradiso Crew","twitter":"@???"},
+{"id":52,"name":"Dixon","twitter":"@???"},
+{"id":53,"name":"Don't DJ","twitter":"@???"},
+{"id":54,"name":"Donallop","twitter":"@???"},
+{"id":55,"name":"Dj Dustin","twitter":"@???"},
+{"id":56,"name":"El Petit de Cal Eril","twitter":"@???"},
+{"id":57,"name":"ELMINI","twitter":"@???"},
+{"id":58,"name":"Elza Soares","twitter":"@???"},
+{"id":59,"name":"Evripidis And His Tragedies","twitter":"@???"},
+{"id":60,"name":"Fairmont live","twitter":"@???"},
+{"id":61,"name":"Fatima Yamaha","twitter":"@???"},
+{"id":62,"name":"Ferenc","twitter":"@???"},
+{"id":63,"name":"Flying Lotus","twitter":"@???"},
+{"id":64,"name":"Formation","twitter":"@???"},
+{"id":65,"name":"Frank Ocean","twitter":"@???"},
+{"id":66,"name":"Front 242","twitter":"@???"},
+{"id":67,"name":"Fufanu","twitter":"@???"},
+{"id":68,"name":"Gas","twitter":"@???"},
+{"id":69,"name":"Glass Animals","twitter":"@???"},
+{"id":70,"name":"Gojira","twitter":"@???"},
+{"id":71,"name":"Golden Bug","twitter":"@???"},
+{"id":72,"name":"Gordi","twitter":"@???"},
+{"id":73,"name":"Grace Jones","twitter":"@???"},
+{"id":74,"name":"Grandaddy","twitter":"@???"},
+{"id":75,"name":"The Growlers","twitter":"@???"},
+{"id":76,"name":"Hamilton Leithauser","twitter":"@???"},
+{"id":77,"name":"The Harlock","twitter":"@???"},
+{"id":78,"name":"Henrik Schwarz","twitter":"@???"},
+{"id":79,"name":"Her Little Donkey","twitter":"@???"},
+{"id":80,"name":"Huerco S.","twitter":"@???"},
+{"id":81,"name":"HVOB","twitter":"@???"},
+{"id":82,"name":"Ian Pooley","twitter":"@???"},
+{"id":83,"name":"InnerCut","twitter":"@???"},
+{"id":84,"name":"Iosonouncane","twitter":"@???"},
+{"id":85,"name":"It's Not Not","twitter":"@???"},
+{"id":86,"name":"Jackmaster","twitter":"@???"},
+{"id":87,"name":"Japandroids","twitter":"@???"},
+{"id":88,"name":"Jardín de la Croix","twitter":"@???"},
+{"id":89,"name":"Jazz","twitter":"@???"},
+{"id":90,"name":"Jeremy Jay","twitter":"@???"},
+{"id":91,"name":"JMII","twitter":"@???"},
+{"id":92,"name":"Joey Purp","twitter":"@???"},
+{"id":93,"name":"John Talabot","twitter":"@???"},
+{"id":94,"name":"Joy Orbison","twitter":"@???"},
+{"id":95,"name":"Julia Jacklin","twitter":"@???"},
+{"id":96,"name":"Julie Doiron","twitter":"@???"},
+{"id":97,"name":"Junun","twitter":"@???"},
+{"id":98,"name":"Kate Tempest","twitter":"@???"},
+{"id":99,"name":"Keems","twitter":"@???"},
+{"id":100,"name":"Kelly Lee Owens","twitter":"@???"},
+{"id":101,"name":"Kepa Junkera & Los Hermanos Cubero","twitter":"@???"},
+{"id":102,"name":"Kepa Junkera","twitter":"@???"},
+{"id":103,"name":"Los Hermanos Cubero","twitter":"@???"},
+{"id":104,"name":"Kevin Morby","twitter":"@???"},
+{"id":105,"name":"Khidja live","twitter":"@???"},
+{"id":106,"name":"Kiasmos dj set","twitter":"@???"},
+{"id":107,"name":"King Gizzard & The Lizard Wizard","twitter":"@???"},
+{"id":108,"name":"King Gizzard","twitter":"@???"},
+{"id":109,"name":"The Lizard Wizard","twitter":"@???"},
+{"id":110,"name":"King Krule","twitter":"@???"},
+{"id":111,"name":"KiNK live","twitter":"@???"},
+{"id":112,"name":"Kokoshca","twitter":"@???"},
+{"id":113,"name":"Kornél Kovács","twitter":"@???"},
+{"id":114,"name":"Lady Wray","twitter":"@???"},
+{"id":115,"name":"Lauer","twitter":"@???"},
+{"id":116,"name":"Les Cruet","twitter":"@???"},
+{"id":117,"name":"Les Sueques","twitter":"@???"},
+{"id":118,"name":"Let's Eat Grandma","twitter":"@???"},
+{"id":119,"name":"Local Natives","twitter":"@???"},
+{"id":120,"name":"Lord Of The Isles","twitter":"@???"},
+{"id":121,"name":"Lvl Up","twitter":"@???"},
+{"id":122,"name":"Mac DeMarco","twitter":"@???"},
+{"id":123,"name":"The Magnetic Fields","twitter":"@???"},
+{"id":124,"name":"The Make-Up","twitter":"@???"},
+{"id":125,"name":"Mannequin Pussy","twitter":"@???"},
+{"id":126,"name":"Màquina Total","twitter":"@???"},
+{"id":127,"name":"Marc Piñol","twitter":"@???"},
+{"id":128,"name":"Maresme","twitter":"@???"},
+{"id":129,"name":"Marie Davidson","twitter":"@???"},
+{"id":130,"name":"Marta Delmont","twitter":"@???"},
+{"id":131,"name":"Marvin & Guy","twitter":"@???"},
+{"id":132,"name":"Matrixxman","twitter":"@???"},
+{"id":133,"name":"Medalla","twitter":"@???"},
+{"id":134,"name":"Melange","twitter":"@???"},
+{"id":135,"name":"Metronomy","twitter":"@???"},
+{"id":136,"name":"Michael Mayer","twitter":"@???"},
+{"id":137,"name":"Miguel","twitter":"@???"},
+{"id":138,"name":"Mishima","twitter":"@???"},
+{"id":139,"name":"Mitski","twitter":"@???"},
+{"id":140,"name":"The  Molochs","twitter":"@???"},
+{"id":141,"name":"Moscoman live band","twitter":"@???"},
+{"id":142,"name":"Muñeco","twitter":"@???"},
+{"id":143,"name":"Murdoc","twitter":"@???"},
+{"id":144,"name":"Museless","twitter":"@???"},
+{"id":145,"name":"The Mystery Lights","twitter":"@???"},
+{"id":146,"name":"Neleonard","twitter":"@???"},
+{"id":147,"name":"Nikki Lane","twitter":"@???"},
+{"id":148,"name":"No Crafts","twitter":"@???"},
+{"id":149,"name":"No Zu","twitter":"@???"},
+{"id":150,"name":"Noga Erez","twitter":"@???"},
+{"id":151,"name":"Nots","twitter":"@???"},
+{"id":152,"name":"Ocellot","twitter":"@???"},
+{"id":153,"name":"Odina","twitter":"@???"},
+{"id":154,"name":"Operators","twitter":"@???"},
+{"id":155,"name":"Papá Topo","twitter":"@???"},
+{"id":156,"name":"Patrick Codenys (Front 242)","twitter":"@???"},
+{"id":157,"name":"PAVVLA","twitter":"@???"},
+{"id":158,"name":"Pearson Sound","twitter":"@???"},
+{"id":159,"name":"Pedro Vian","twitter":"@???"},
+{"id":160,"name":"Pender Street Steppers","twitter":"@???"},
+{"id":161,"name":"Phurpa","twitter":"@???"},
+{"id":162,"name":"Pinegrove","twitter":"@???"},
+{"id":163,"name":"Playback Maracas","twitter":"@???"},
+{"id":164,"name":"Polar Inertia","twitter":"@???"},
+{"id":165,"name":"Polseguera","twitter":"@???"},
+{"id":166,"name":"Pond","twitter":"@???"},
+{"id":167,"name":"Preoccupations","twitter":"@???"},
+{"id":168,"name":"Priests","twitter":"@???"},
+{"id":169,"name":"Rebuig","twitter":"@???"},
+{"id":170,"name":"Recondite live","twitter":"@???"},
+{"id":171,"name":"Regalim","twitter":"@???"},
+{"id":172,"name":"Retirada!","twitter":"@???"},
+{"id":173,"name":"Romare live","twitter":"@???"},
+{"id":174,"name":"Rosalía & Raül Refree","twitter":"@???"},
+{"id":175,"name":"Rosalía","twitter":"@???"},
+{"id":176,"name":"Raül Refree","twitter":"@???"},
+{"id":177,"name":"Royal Trux","twitter":"@???"},
+{"id":178,"name":"Run The Jewels","twitter":"@???"},
+{"id":179,"name":"Ryder The Eagle","twitter":"@???"},
+{"id":180,"name":"S U R V I V E","twitter":"@???"},
+{"id":181,"name":"Saint Etienne","twitter":"@???"},
+{"id":182,"name":"SALFVMAN","twitter":"@???"},
+{"id":183,"name":"Sampha","twitter":"@???"},
+{"id":184,"name":"Sau Poler","twitter":"@???"},
+{"id":185,"name":"Seu Jorge","twitter":"@???"},
+{"id":186,"name":"Shelby Grey","twitter":"@???"},
+{"id":187,"name":"Shellac","twitter":"@???"},
+{"id":188,"name":"Silent James","twitter":"@???"},
+{"id":189,"name":"Sinkane","twitter":"@???"},
+{"id":190,"name":"Skepta","twitter":"@???"},
+{"id":191,"name":"Skinny Puppy","twitter":"@???"},
+{"id":192,"name":"Slayer","twitter":"@???"},
+{"id":193,"name":"Sleaford Mods","twitter":"@???"},
+{"id":194,"name":"Sleep","twitter":"@???"},
+{"id":195,"name":"Slim Cessna's Auto Club","twitter":"@???"},
+{"id":196,"name":"Solange","twitter":"@???"},
+{"id":197,"name":"Soledad Vélez","twitter":"@???"},
+{"id":198,"name":"Sorry Kate","twitter":"@???"},
+{"id":199,"name":"Swans","twitter":"@???"},
+{"id":200,"name":"Swet Shop Boys","twitter":"@???"},
+{"id":201,"name":"Talaboman","twitter":"@???"},
+{"id":202,"name":"Teenage Fanclub","twitter":"@???"},
+{"id":203,"name":"Dj Tennis","twitter":"@???"},
+{"id":204,"name":"This Is Not This Heat","twitter":"@???"},
+{"id":205,"name":"Triángulo de Amor Bizarro","twitter":"@???"},
+{"id":206,"name":"Tuff City Kids","twitter":"@???"},
+{"id":207,"name":"Tycho","twitter":"@???"},
+{"id":208,"name":"Vaadat Charigim","twitter":"@???"},
+{"id":209,"name":"vàlius + Carlora Serrahima","twitter":"@???"},
+{"id":210,"name":"vàlius","twitter":"@???"},
+{"id":211,"name":"Carlota Serrahima","twitter":"@???"},
+{"id":212,"name":"Van Morrison","twitter":"@???"},
+{"id":213,"name":"Vladimir Ivkovic","twitter":"@???"},
+{"id":214,"name":"Vox Low","twitter":"@???"},
+{"id":215,"name":"Wand","twitter":"@???"},
+{"id":216,"name":"The Waterparties","twitter":"@???"},
+{"id":217,"name":"The Wave Pictures","twitter":"@???"},
+{"id":218,"name":"The Wedding Present","twitter":"@???"},
+{"id":219,"name":"Weval","twitter":"@???"},
+{"id":220,"name":"Weyes Blood","twitter":"@???"},
+{"id":221,"name":"The Wheels","twitter":"@???"},
+{"id":222,"name":"Whitney","twitter":"@???"},
+{"id":223,"name":"Wild Beasts","twitter":"@???"},
+{"id":224,"name":"William Tyler","twitter":"@???"},
+{"id":225,"name":"The xx","twitter":"@???"},
+{"id":226,"name":"Youandewan","twitter":"@???"},
+{"id":227,"name":"Young Marco","twitter":"@???"},
+{"id":228,"name":"The Zombies","twitter":"@???"},
+{"id":229,"name":"Adelaida","twitter":"@???"},
+{"id":230,"name":"Aeromoças e Tenistas Russas","twitter":"@???"},
+{"id":231,"name":"Astronaut Project","twitter":"@???"},
+{"id":232,"name":"BIKE","twitter":"@???"},
+{"id":233,"name":"Billy Carter","twitter":"@???"},
+{"id":234,"name":"De Mónaco","twitter":"@???"},
+{"id":235,"name":"DIEALRIGHT","twitter":"@???"},
+{"id":236,"name":"Entropia","twitter":"@???"},
+{"id":237,"name":"Escorpio","twitter":"@???"},
+{"id":238,"name":"FingerFingerrr","twitter":"@???"},
+{"id":239,"name":"G-C","twitter":"@???"},
+{"id":240,"name":"Gold Class","twitter":"@???"},
+{"id":241,"name":"Hanba!","twitter":"@???"},
+{"id":242,"name":"Inzul","twitter":"@???"},
+{"id":243,"name":"JAAA!","twitter":"@???"},
+{"id":244,"name":"Joel Sarakula","twitter":"@???"},
+{"id":245,"name":"Leyya","twitter":"@???"},
+{"id":246,"name":"Lígula","twitter":"@???"},
+{"id":247,"name":"Liniker e os Caramelows","twitter":"@???"},
+{"id":248,"name":"Marley BloO","twitter":"@???"},
+{"id":249,"name":"Marrakesh","twitter":"@???"},
+{"id":250,"name":"Me & The Plant","twitter":"@???"},
+{"id":251,"name":"Meridian Response","twitter":"@???"},
+{"id":252,"name":"Miss Garrison","twitter":"@???"},
+{"id":253,"name":"no metal in this battle","twitter":"@???"},
+{"id":254,"name":"PATiENTS","twitter":"@???"},
+{"id":255,"name":"Persian Pelican","twitter":"@???"},
+{"id":256,"name":"Prairie WWWW","twitter":"@???"},
+{"id":257,"name":"Radio 123","twitter":"@???"},
+{"id":258,"name":"RBP","twitter":"@???"},
+{"id":259,"name":"Riviere","twitter":"@???"},
+{"id":260,"name":"SHAO","twitter":"@???"},
+{"id":261,"name":"Sharman Den","twitter":"@???"},
+{"id":262,"name":"Shijo X","twitter":"@???"},
+{"id":263,"name":"Skegss","twitter":"@???"},
+{"id":264,"name":"Tiê","twitter":"@???"},
+{"id":265,"name":"Tired Lion","twitter":"@???"},
+{"id":266,"name":"Tourista","twitter":"@???"},
+{"id":267,"name":"Wrongonyou","twitter":"@???"}
+]
