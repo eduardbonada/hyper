@@ -13,7 +13,7 @@ from datetime import datetime
 from pprint import pprint
 
 # track number of tweets (developing purposes)
-max_tweets_to_store = 1 # maximum number of tweets to store before shutting down the streaming
+max_tweets_to_store = -1 # maximum number of tweets to store before shutting down the streaming (-1 for non stop)
 
 # Class that manages the events received from streaming API
 class TweetsListener(tweepy.StreamListener):
@@ -30,7 +30,7 @@ class TweetsListener(tweepy.StreamListener):
 
         tweet_info = status._json;
 
-        print("Received tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
+        print("Received tweet #{} {} => {}".format(self.count, tweet_info['id_str'],tweet_info['text']))
         #pprint(status)
         # print(tweet_info['id_str'])
 
@@ -54,8 +54,9 @@ class TweetsListener(tweepy.StreamListener):
                             userFollowersCount=tweet_info['user']['followers_count'], \
                             userStatusesCount=tweet_info['user']['statuses_count'], \
                             userFavsCount=tweet_info['user']['favourites_count'], \
-                            userLocation=tweet_info['user']['location'].replace("'","''")) \
+                            userLocation='') \
             )
+            # tweet_info['user']['location'].replace("'","''"))
         except sqlite3.Error as e:
             print("####################\nError: {}\n####################\n".format(e))
 
@@ -64,8 +65,9 @@ class TweetsListener(tweepy.StreamListener):
         connection.close()
 
         # shut down streaming if maximum number of tweets has been reached
-        if self.count == max_tweets_to_store:
-            return False
+        if max_tweets_to_store != -1:
+            if self.count == max_tweets_to_store:
+                return False
 
         return True
  
@@ -96,4 +98,4 @@ api = tweepy.API(auth)
 twitter_stream = tweepy.Stream(auth, TweetsListener())
 
 # Launch streaming
-twitter_stream.filter(track=['#trump'])
+twitter_stream.filter(track=['@Primavera_Sound','primavera sound', '#PS2017'])
