@@ -38,12 +38,13 @@ for b in bands:
 
 	# store band into db
 	try:
-		db.execute("INSERT INTO Bands (id,name,codedName,twitterName) \
-					VALUES ('{id}','{name}','{codedName}','{twitterName}')".format(\
+		db.execute("INSERT INTO Bands (id,name,codedName,twitterName,headLevel) \
+					VALUES ('{id}','{name}','{codedName}','{twitterName}','{headLevel}')".format(\
 				        id=b['id'], \
 				        name=bandname.replace("'","''"), \
 				        codedName=bandname_lowercase_no_spaces_no_accents.replace("'","''"), \
-				        twitterName=b['twitter'])
+				        twitterName=b['twitter'], \
+				        headLevel=b['headLevel'])
 		)
 		connection.commit()
 	except sqlite3.Error as e:
