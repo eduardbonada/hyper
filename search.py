@@ -9,7 +9,7 @@ from pprint import pprint
 
 # script parameters
 query = 'primavera sound'
-max_tweets = 500
+max_tweets = 1000
 
 # Setup twitter API access
 consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
@@ -31,17 +31,22 @@ api = tweepy.API(auth)
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
+# count tweets before searching
+db.execute("SELECT COUNT(*) FROM TweetsRaw")
+print("{} tweets in DB".format(db.fetchone()[0]))
+
 # search tweets
 searched_tweets = [status for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
 
 print("Found {} tweets about '{}'".format(len(searched_tweets), query))
+
 
 # Store the tweets in DB
 for st in searched_tweets:
     try:
         tweet_info = st._json;
 
-        print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
+        # print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
 
         db.execute("INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
                     VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
@@ -65,5 +70,10 @@ for st in searched_tweets:
 
 # Commit and close
 connection.commit()
+
+# count tweets after searching
+db.execute("SELECT COUNT(*) FROM TweetsRaw")
+print("{} tweets in DB".format(db.fetchone()[0]))
+
 connection.close()
     
