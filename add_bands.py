@@ -17,7 +17,7 @@ connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 # collect list of bands
-json_data=open('bands.json').read()
+json_data=open('bands_new.json').read()
 bands = json.loads(json_data)
 #pprint(bands)
 
@@ -38,13 +38,14 @@ for b in bands:
 
 	# store band into db
 	try:
-		db.execute("INSERT INTO Bands (id,name,codedName,twitterName,headLevel) \
-					VALUES ('{id}','{name}','{codedName}','{twitterName}','{headLevel}')".format(\
+		db.execute("INSERT INTO Bands (id,name,codedName,twitterName,headLevel,popularity) \
+					VALUES ('{id}','{name}','{codedName}','{twitterName}','{headLevel}','{popularity}')".format(\
 				        id=b['id'], \
 				        name=bandname.replace("'","''"), \
 				        codedName=bandname_lowercase_no_spaces_no_accents.replace("'","''"), \
 				        twitterName=b['twitter'], \
-				        headLevel=b['headLevel'])
+				        headLevel=b['headLevel'], \
+				        popularity=b['popularity'])
 		)
 		connection.commit()
 	except sqlite3.Error as e:

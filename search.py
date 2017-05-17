@@ -9,7 +9,7 @@ from pprint import pprint
 
 # script parameters
 query = 'primavera sound'
-max_tweets = 1000
+max_tweets = 500
 
 # Setup twitter API access
 consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
