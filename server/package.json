@@ -1,0 +1,12 @@
+{
+  "name": "hyper",
+  "version": "0.0.1",
+  "description": "Festook Hyper",
+  "main": "server.js",
+  "author": "ae",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1"
+  }
+}
