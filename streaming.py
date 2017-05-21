@@ -98,4 +98,4 @@ api = tweepy.API(auth)
 twitter_stream = tweepy.Stream(auth, TweetsListener())
 
 # Launch streaming
-twitter_stream.filter(track=['@Primavera_Sound','primavera sound', '#PS2017'])
+twitter_stream.filter(track=['primavera sound'])

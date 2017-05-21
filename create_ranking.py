@@ -7,6 +7,7 @@ import pandas as pd
 import string
 import unicodedata
 import numpy as np
+from datetime import datetime
 
 # Setup sqlite and connect to it
 sqlite_file = 'hyper_live.db'
@@ -150,9 +151,12 @@ del band_hypes['userStatusesCount']
 del band_hypes['userFavsCount']
 del band_hypes['processed']
 
+# add createdAt column
+band_hypes['createdAt'] = datetime.now().strftime("%a %b %d %H:%M:%S +0000 %Y")
+
 # rename and re-order columns
 band_hypes = band_hypes.rename(columns={'favsCount':'favs', 'rtsCount':'retweets'})
-band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'popularity', 'tweets', 'favs', 'retweets']]
+band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'popularity', 'tweets', 'favs', 'retweets', 'createdAt']]
 
 # Compute BF-IBP (Band Frequency - Inverse Band Popularity)
 bf_numerator = band_hypes['tweets']*(1 + band_hypes['favs'] + band_hypes['retweets'])
@@ -161,5 +165,13 @@ band_hypes['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(band_hypes['po
 # log top 10
 print(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10))
 
-# Persist band_hypes to DB
+"""
+Persist band_hypes to DB
+"""
+# table with current ranking
 band_hypes[['bandId','tweets','favs','retweets','bf_ibp']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+
+# table with historical of rankings
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+
+
