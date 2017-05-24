@@ -161,6 +161,10 @@ last_ranking = pd.read_sql_query("""
                                     ORDER BY bf_ibp DESC
                                 """, 
                                 connection)
+print("LAST RANKING\n{}".format(last_ranking.head(10)))
+
+#print('!!!!!!\nREMOVE THIS LINE\n!!!!!!\n')
+#last_ranking['ranking_position'] = last_ranking['bf_ibp'].rank(ascending=0)
 
 # rename and re-order columns
 band_hypes = band_hypes.rename(columns={'favsCount':'favs', 'rtsCount':'retweets'})
@@ -170,14 +174,21 @@ band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'po
 bf_numerator = band_hypes['tweets']*(1 + band_hypes['favs'] + band_hypes['retweets'])
 band_hypes['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(band_hypes['popularity'].astype(float) + 1)
 
+def compareBandPosition(band_row):
+    """
+    Function that compares the position of a band in the current ranking (in band_row) compared to the
+    position in the last ranking
+    """
+    new_position = band_row.ranking_position
+    last_postion = last_ranking['ranking_position'][last_ranking.bandId == band_row.bandId].values[0]
+    return last_postion - new_position
+
 # add a column indicating change in ranking
 band_hypes['ranking_position'] = band_hypes['bf_ibp'].rank(ascending=0)
-band_hypes['ranking_change'] = 0
-
-print(last_ranking)
+band_hypes['ranking_change'] = band_hypes.apply(compareBandPosition, axis=1)
 
 # log top 10
-print(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10))
+print("NEW RANKING\n{}".format(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10)))
 
 """
 Persist band_hypes to DB
