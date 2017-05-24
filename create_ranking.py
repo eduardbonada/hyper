@@ -154,6 +154,14 @@ del band_hypes['processed']
 # add createdAt column
 band_hypes['createdAt'] = datetime.now().strftime("%a %b %d %H:%M:%S +0000 %Y")
 
+# Get last ranking
+last_ranking = pd.read_sql_query("""
+                                    SELECT * 
+                                    FROM BandsHype
+                                    ORDER BY bf_ibp DESC
+                                """, 
+                                connection)
+
 # rename and re-order columns
 band_hypes = band_hypes.rename(columns={'favsCount':'favs', 'rtsCount':'retweets'})
 band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'popularity', 'tweets', 'favs', 'retweets', 'createdAt']]
@@ -162,6 +170,12 @@ band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'po
 bf_numerator = band_hypes['tweets']*(1 + band_hypes['favs'] + band_hypes['retweets'])
 band_hypes['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(band_hypes['popularity'].astype(float) + 1)
 
+# add a column indicating change in ranking
+band_hypes['ranking_position'] = band_hypes['bf_ibp'].rank(ascending=0)
+band_hypes['ranking_change'] = 0
+
+print(last_ranking)
+
 # log top 10
 print(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10))
 
@@ -169,9 +183,9 @@ print(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10))
 Persist band_hypes to DB
 """
 # table with current ranking
-band_hypes[['bandId','tweets','favs','retweets','bf_ibp']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp', 'ranking_change', 'ranking_position']].to_sql("BandsHype", connection, if_exists="replace", index=False)
 
 # table with historical of rankings
-band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+# band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
 
