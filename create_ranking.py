@@ -10,7 +10,8 @@ import numpy as np
 from datetime import datetime
 
 # Setup sqlite and connect to it
-sqlite_file = 'hyper_live.db'
+#sqlite_file = 'hyper_live.db'
+sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
@@ -163,12 +164,21 @@ last_ranking = pd.read_sql_query("""
                                 connection)
 print("LAST RANKING\n{}".format(last_ranking.head(10)))
 
+# uncomment if the last ranking does not have ranking_position yet
 #print('!!!!!!\nREMOVE THIS LINE\n!!!!!!\n')
 #last_ranking['ranking_position'] = last_ranking['bf_ibp'].rank(ascending=0)
 
 # rename and re-order columns
 band_hypes = band_hypes.rename(columns={'favsCount':'favs', 'rtsCount':'retweets'})
 band_hypes = band_hypes[['bandId', 'bandCodedName', 'bandName', 'headLevel', 'popularity', 'tweets', 'favs', 'retweets', 'createdAt']]
+
+# # merge bands with different names that are actually the same band: !!! and chk chk chk
+# a=band_hypes[band_hypes['bandCodedName']=='!!!']
+# b=band_hypes[band_hypes['bandCodedName']=='chkchkchk']
+# band_hypes.loc[band_hypes.bandCodedName == '!!!', 'tweets'] = a.tweets.values[0] + b.tweets.values[0]
+# band_hypes.loc[band_hypes.bandCodedName == '!!!', 'favs'] = a.favs.values[0] + b.favs.values[0]
+# band_hypes.loc[band_hypes.bandCodedName == '!!!', 'retweets'] = a.retweets.values[0] + b.retweets.values[0]
+# band_hypes = band_hypes.drop(band_hypes[band_hypes.bandCodedName == 'chkchkchk'].index)
 
 # Compute BF-IBP (Band Frequency - Inverse Band Popularity)
 bf_numerator = band_hypes['tweets']*(1 + band_hypes['favs'] + band_hypes['retweets'])
@@ -180,12 +190,17 @@ def compareBandPosition(band_row):
     position in the last ranking
     """
     new_position = band_row.ranking_position
-    last_postion = last_ranking['ranking_position'][last_ranking.bandId == band_row.bandId].values[0]
-    return last_postion - new_position
+    difference = 0
+    if(any(last_ranking['bandId'].isin([band_row['bandId']]))):
+        last_postion = last_ranking['ranking_position'][last_ranking.bandId == band_row.bandId].values[0]
+        difference = last_postion - new_position
+    return difference
 
 # add a column indicating change in ranking
 band_hypes['ranking_position'] = band_hypes['bf_ibp'].rank(ascending=0)
 band_hypes['ranking_change'] = band_hypes.apply(compareBandPosition, axis=1)
+# band_hypes['ranking_change'] = 0
+
 
 # log top 10
 print("NEW RANKING\n{}".format(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10)))
@@ -197,6 +212,6 @@ Persist band_hypes to DB
 band_hypes[['bandId','tweets','favs','retweets','bf_ibp', 'ranking_change', 'ranking_position']].to_sql("BandsHype", connection, if_exists="replace", index=False)
 
 # table with historical of rankings
-# band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
 

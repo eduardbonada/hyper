@@ -95,6 +95,10 @@ rankings = pd.read_sql_query("""SELECT b.codedName AS bandCodedName, rs.tweets, 
                             	FROM BandsHypeHis AS rs
                             	LEFT JOIN Bands AS b ON rs.bandId = b.id""", connection)
 
+# filter last N-hours
+rankings['createdAt'] = pd.to_datetime(rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
+recent_rankings = rankings[ rankings['createdAt'] > (datetime.now() - timedelta(hours=24))]
+
 # get top-10 bands
 top_10 = current_ranking.sort_values('bf_ibp', ascending = False)['bandCodedName'][0:10]
 
@@ -102,7 +106,7 @@ top_10 = current_ranking.sort_values('bf_ibp', ascending = False)['bandCodedName
 bands = top_10 #['arcadefire', '!!!', 'frankocean']
 ax3 = plt.figure().add_subplot(111)
 for b in bands:
-	rankings[rankings['bandCodedName'] == b].set_index('createdAt').plot(y='bf_ibp', label=b, ax=ax3)
+    recent_rankings[recent_rankings['bandCodedName'] == b].set_index('createdAt').plot(y='bf_ibp', label=b, ax=ax3)
 ax3.set_title('Evolution of bf_ibp')
 ax3.set_ylabel('bf_ibp')
 ax3.set_xlabel('time')

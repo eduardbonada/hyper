@@ -10,3 +10,9 @@ UPDATE TweetsRaw SET processed = NULL
 DELETE FROM BandTweets
 SELECT * FROM BandTweets
 
+/* select last n tweets with a band */
+SELECT r.tweetText
+FROM BandTweets b
+LEFT JOIN TweetsRaw r ON b.tweetRawId = r.id
+ORDER BY r.createdAt 
+LIMIT 10 
