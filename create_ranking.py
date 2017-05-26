@@ -201,6 +201,8 @@ band_hypes['ranking_position'] = band_hypes['bf_ibp'].rank(ascending=0)
 band_hypes['ranking_change'] = band_hypes.apply(compareBandPosition, axis=1)
 # band_hypes['ranking_change'] = 0
 
+# add a column indicating the the trending level (based on the last position changes)
+
 
 # log top 10
 print("NEW RANKING\n{}".format(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10)))
@@ -212,6 +214,6 @@ Persist band_hypes to DB
 band_hypes[['bandId','tweets','favs','retweets','bf_ibp', 'ranking_change', 'ranking_position']].to_sql("BandsHype", connection, if_exists="replace", index=False)
 
 # table with historical of rankings
-band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_change','ranking_position','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
 
