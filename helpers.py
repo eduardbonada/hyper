@@ -58,7 +58,7 @@ def band_partition(tweet):
     db.execute("UPDATE TweetsRaw SET processed = 1 WHERE id == {}".format(tweet.id))
     connection.commit()
 
-def compareBandPosition(band_row):
+def compareBandPosition(band_row, last_ranking):
     """
     Function that compares the position of a band in the current ranking (in band_row) compared to the
     position in the last ranking
@@ -66,6 +66,6 @@ def compareBandPosition(band_row):
     new_position = band_row.ranking_position
     difference = 0
     if(any(last_ranking['bandId'].isin([band_row['bandId']]))):
-        last_postion = last_ranking['ranking_position'][last_ranking.bandId == band_row.bandId].values[0]
-        difference = last_postion - new_position
+        last_position = last_ranking['ranking_position'][last_ranking.bandId == band_row.bandId].values[0]
+        difference = last_position - new_position
     return difference
