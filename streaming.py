@@ -40,21 +40,21 @@ class TweetsListener(tweepy.StreamListener):
 
         # Store the tweet in DB
         try:
-            db.execute("INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userId,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
-                        VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')".format(\
-                            tweetId=tweet_info['id_str'], \
-                            createdAt=tweet_info['created_at'], \
-                            storedAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), \
-                            tweetText=tweet_info['text'].replace("'","''"), \
-                            favsCount=tweet_info['favorite_count'], \
-                            rtsCount=tweet_info['retweet_count'], \
-                            language=tweet_info['lang'], \
-                            userId=tweet_info['user']['id_str'], \
-                            userFriendsCount=tweet_info['user']['friends_count'], \
-                            userFollowersCount=tweet_info['user']['followers_count'], \
-                            userStatusesCount=tweet_info['user']['statuses_count'], \
-                            userFavsCount=tweet_info['user']['favourites_count'], \
-                            userLocation='') \
+            db.execute("""INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userId,userFriendsCount,userFollowersCount,userStatusesCount,userFavsCount,userLocation) 
+                        VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')""".format(
+                            tweetId=tweet_info['id_str'], 
+                            createdAt=tweet_info['created_at'], 
+                            storedAt=datetime.now().strftime("%a %b %d %H:%M:%S +0200 %Y"), 
+                            tweetText=tweet_info['text'].replace("'","''"), 
+                            favsCount=tweet_info['favorite_count'], 
+                            rtsCount=tweet_info['retweet_count'], 
+                            language=tweet_info['lang'], 
+                            userId=tweet_info['user']['id_str'], 
+                            userFriendsCount=tweet_info['user']['friends_count'], 
+                            userFollowersCount=tweet_info['user']['followers_count'], 
+                            userStatusesCount=tweet_info['user']['statuses_count'], 
+                            userFavsCount=tweet_info['user']['favourites_count'], 
+                            userLocation='')
             )
             # tweet_info['user']['location'].replace("'","''"))
         except sqlite3.Error as e:
@@ -85,7 +85,7 @@ access_token = '74265344-UOJgWD9vzB9wJvgnet3f63bkQdJ0rLGz9gg67fqDP'
 access_secret = '4AFqod7kCScnSDf9OcgmVeIdnxwa9ZKn9pwwFMBbpLi7u'
 
 # Setup sqlite
-sqlite_file = 'hyper.db'
+sqlite_file = '/Users/eduard/DeveloperWeb/hyper/hyper_live.db'
     
 # Manage twitter API access
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)

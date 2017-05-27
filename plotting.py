@@ -7,16 +7,20 @@ import pandas as pd
 from datetime import datetime, timedelta
 import numpy as np
 import matplotlib as mpl
-#mpl.use('Agg') # Force matplotlib to not use any Xwindows backend.
+mpl.use('Agg') # Force matplotlib to not use any Xwindows backend.
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Setup sqlite to read from
-sqlite_file = 'hyper_live.db'
+
+"""
+SETUP DB
+"""
+#sqlite_file = 'hyper_live.db'
+#sqlite_file = '/Users/eduard/DeveloperWeb/hyper/hyper_live.db'
+sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
-#try:
 
 """
 PLOT WITH ALL TWEETS
@@ -28,21 +32,20 @@ all_tweets['createdAt'] = pd.to_datetime(all_tweets['createdAt'], format ='%a %b
 all_tweets.index = all_tweets['createdAt']
 
 # Construct a dataframe joining data from TweetsRaw and BandTweets
-band_tweets = pd.read_sql_query("SELECT bt.bandId, \
-                                        b.name AS bandName, \
-                                        b.codedName AS bandCodedName, \
-                                        b.headLevel AS headLevel, \
-                                        b.popularity AS popularity, \
-                                        tr.* \
-                                 FROM BandTweets AS bt\
-                                 LEFT JOIN TweetsRaw AS tr ON bt.tweetRawId == tr.id \
-                                 LEFT JOIN Bands AS b ON bt.bandId == b.id", connection)
+band_tweets = pd.read_sql_query(""" SELECT bt.bandId, 
+                                        b.name AS bandName, 
+                                        b.codedName AS bandCodedName, 
+                                        b.headLevel AS headLevel, 
+                                        b.popularity AS popularity, 
+                                        tr.* 
+                                    FROM BandTweets AS bt 
+                                    LEFT JOIN TweetsRaw AS tr ON bt.tweetRawId == tr.id 
+                                    LEFT JOIN Bands AS b ON bt.bandId == b.id""", connection)
 band_tweets['createdAt'] = pd.to_datetime(band_tweets['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
 band_tweets.index = band_tweets['createdAt']
 
 # timeline plot comparing alltweets vs bandtweets
 fig = plt.figure()
-#plt.subplots_adjust(top=1.2)
 ax1 = fig.add_subplot(211)
 all_tweets.resample('D').count()['tweetId'].plot(kind='bar', \
                                                  color=sns.xkcd_rgb['sky'], \
@@ -78,7 +81,9 @@ ax2.legend()
 
 # store in file
 fig = ax2.get_figure()
-fig.savefig("tweets.png")
+#fig.savefig("tweets.png")
+fig.savefig("/home/ebonada/python/hyper/server/public/images/tweets.png")
+#fig.savefig("/Users/eduard/DeveloperWeb/hyper/public/images/tweets.png")
 
 
 """
@@ -109,14 +114,14 @@ for b in bands:
     recent_rankings[recent_rankings['bandCodedName'] == b].set_index('createdAt').plot(y='bf_ibp', label=b, ax=ax3)
 ax3.set_title('Evolution of bf_ibp')
 ax3.set_ylabel('bf_ibp')
-ax3.set_xlabel('time')
+ax3.set_xlabel('Last 24h')
 ax3.set_xticklabels([])
 plt.gcf().subplots_adjust(bottom=0.15)
 ax3.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=5)
 
 # store in file
 fig = ax3.get_figure()
-fig.savefig("rankings.png")
+#fig.savefig("rankings.png")
+fig.savefig("/home/ebonada/python/hyper/server/public/images/rankings.png")
+#fig.savefig("/Users/eduard/DeveloperWeb/hyper/public/images/rankings.png")
 
-#except:
-#	print("Error")

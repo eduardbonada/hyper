@@ -1,9 +1,10 @@
+import unicodedata
 
 """
 Create Ranking
 """
 
-def extract_bands(tweet):
+def extract_bands(tweet, bands):
     """
     Function that extracts the bands from a tweet text
     Returns a list of bands
@@ -23,13 +24,15 @@ def extract_bands(tweet):
         bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
 
         # check if any of the forms is in the tweet text
-        if any(s in tweet['tweetText'].lower() for s in [bandname_lowercase, bandname_lowercase_no_spaces, bandname_lowercase_no_accents, bandname_lowercase_no_spaces_no_accents, b['twitterName']]):
+        if any(s in tweet['tweetText'].lower() for s in [   "{}".format(bandname_lowercase), 
+                                                            "{}".format(bandname_lowercase_no_accents), 
+                                                            b['twitterName']]):
             bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
 
     return bands_in_tweet
 
 
-def band_partition(tweet):
+def band_partition(tweet, new_band_tweets_list, db, connection):
     """
     Function that reads a single tweet info and adds into a list the tweet information partitioned by bands.
     I.e. If a tweet mentions 2 bands, it adds a list of 2 dicts with the tweet info
@@ -57,6 +60,7 @@ def band_partition(tweet):
     # Mark TweetsRaw as processed
     db.execute("UPDATE TweetsRaw SET processed = 1 WHERE id == {}".format(tweet.id))
     connection.commit()
+
 
 def compareBandPosition(band_row, last_ranking):
     """
