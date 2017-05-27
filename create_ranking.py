@@ -7,7 +7,7 @@ import pandas as pd
 import string
 import unicodedata
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Setup sqlite and connect to it
 #sqlite_file = 'hyper_live.db'
@@ -198,20 +198,45 @@ def compareBandPosition(band_row):
 
 # add a column indicating change in ranking
 band_hypes['ranking_position'] = band_hypes['bf_ibp'].rank(ascending=0)
-band_hypes['ranking_change'] = band_hypes.apply(compareBandPosition, axis=1)
-# band_hypes['ranking_change'] = 0
+#band_hypes['ranking_change'] = band_hypes.apply(compareBandPosition, axis=1)
+band_hypes['ranking_change'] = 0
 
+"""
+Trending level
+"""
 
-# log top 10
-print("NEW RANKING\n{}".format(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10)))
+# read the last N rankings from the historical table
+last_n_rankings = pd.read_sql_query("""
+                                    SELECT * 
+                                    FROM BandsHypeHis
+                                    """, 
+                                connection)
+
+# create a datetime version of createdAt
+last_n_rankings['createdAt_datetime'] = pd.to_datetime(last_n_rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
+
+# filter rankings of only last hour
+last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (datetime.now() - timedelta(hours=1))]
+
+# compute accumulated ranking changes
+ranking_changes = pd.DataFrame(last_n_rankings.groupby('bandId')['ranking_change'].sum())
+ranking_changes = ranking_changes.reset_index()
+
+# join dfs
+band_hypes = pd.merge(band_hypes, ranking_changes, left_on='bandId', right_on='bandId', how='left')
+
+# rename columns
+band_hypes = band_hypes.rename(columns={'ranking_change_x':'ranking_change', 'ranking_change_y':'trending_level'})
+
 
 """
 Persist band_hypes to DB
 """
 # table with current ranking
-band_hypes[['bandId','tweets','favs','retweets','bf_ibp', 'ranking_change', 'ranking_position']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].to_sql("BandsHype", connection, if_exists="replace", index=False)
 
 # table with historical of rankings
-band_hypes[['bandId','tweets','favs','retweets','bf_ibp','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
-
+# log top 10
+print("NEW RANKING\n{}".format(band_hypes.sort_values(by='bf_ibp', ascending=False).head(10)))
