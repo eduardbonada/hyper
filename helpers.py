@@ -1,4 +1,5 @@
 import unicodedata
+import re
 
 """
 Create Ranking
@@ -10,12 +11,15 @@ def extract_bands(tweet, bands):
     Returns a list of bands
     """
     
+    if tweet.name % 1000 == 0:
+        print(tweet.name)
+    
     # init list to return
     bands_in_tweet = []
     
     # loop all bands and check of any of the written forms is present in the tweet text
     for i, b in bands.iterrows():
-                
+
         # set different band names writing possibilities
         bandname = b['name']
         bandname_lowercase = bandname.lower()
@@ -23,11 +27,25 @@ def extract_bands(tweet, bands):
         bandname_lowercase_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase) if unicodedata.category(c) != 'Mn'))
         bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
 
-        # check if any of the forms is in the tweet text
-        if any(s in tweet['tweetText'].lower() for s in [   "{}".format(bandname_lowercase), 
-                                                            "{}".format(bandname_lowercase_no_accents), 
-                                                            b['twitterName']]):
+        # create regex's
+        my_regex_1 = r"[., ]" + re.escape(bandname_lowercase) + r"[., ]"
+        my_regex_2 = r"[., ]" + re.escape(bandname_lowercase_no_accents) + r"[., ]"
+        my_regex_3 = r"[., ]" + re.escape(b['twitterName']) + r"[., ]"
+
+        # check if any of the regex's is in the tweet text
+        if  re.search(my_regex_1,tweet['tweetText'].lower()) or \
+            re.search(my_regex_2,tweet['tweetText'].lower()) or \
+            re.search(my_regex_3,tweet['tweetText'].lower()):
             bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
+
+        # if any(s in tweet['tweetText'].lower() for s in [   " {} ".format(bandname_lowercase), 
+        #                                                     " {} ".format(bandname_lowercase_no_accents), 
+        #                                                     "{},".format(bandname_lowercase), 
+        #                                                     "{},".format(bandname_lowercase_no_accents), 
+        #                                                     ",{}".format(bandname_lowercase), 
+        #                                                     ",{}".format(bandname_lowercase_no_accents),
+        #                                                     b['twitterName']]):
+        #     bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
 
     return bands_in_tweet
 
