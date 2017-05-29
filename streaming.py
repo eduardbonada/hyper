@@ -12,6 +12,10 @@ import sqlite3
 from datetime import datetime
 from pprint import pprint
 
+# Setup sqlite
+#sqlite_file = 'hyper_live.db'
+sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+
 # track number of tweets (developing purposes)
 max_tweets_to_store = -1 # maximum number of tweets to store before shutting down the streaming (-1 for non stop)
 
@@ -30,7 +34,7 @@ class TweetsListener(tweepy.StreamListener):
 
         tweet_info = status._json;
 
-        print("Received tweet #{} {} => {}".format(self.count, tweet_info['id_str'],tweet_info['text']))
+        print("Tweet #{} => {}".format(self.count, tweet_info['text']))
         #pprint(status)
         # print(tweet_info['id_str'])
 
@@ -83,9 +87,6 @@ consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
 consumer_secret = 'TuTQKld9os111vx7oMSM3PTfoNz9dZDcnACxIvHGL9euIvLE8I'
 access_token = '74265344-UOJgWD9vzB9wJvgnet3f63bkQdJ0rLGz9gg67fqDP'
 access_secret = '4AFqod7kCScnSDf9OcgmVeIdnxwa9ZKn9pwwFMBbpLi7u'
-
-# Setup sqlite
-sqlite_file = '/Users/eduard/DeveloperWeb/hyper/hyper_live.db'
     
 # Manage twitter API access
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -98,4 +99,7 @@ api = tweepy.API(auth)
 twitter_stream = tweepy.Stream(auth, TweetsListener())
 
 # Launch streaming
-twitter_stream.filter(track=['primavera sound'])
+print("Streaming running...");
+twitter_stream.filter(track=['primavera sound', '#primaverasound', '#unexpectedprimavera'])
+
+

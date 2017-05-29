@@ -11,8 +11,8 @@ def extract_bands(tweet, bands):
     Returns a list of bands
     """
     
-    if tweet.name % 1000 == 0:
-        print(tweet.name)
+    #if tweet.name % 1000 == 0:
+    #    print(tweet.name)
     
     # init list to return
     bands_in_tweet = []
@@ -28,9 +28,9 @@ def extract_bands(tweet, bands):
         bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
 
         # create regex's
-        my_regex_1 = r"[., ]" + re.escape(bandname_lowercase) + r"[., ]"
-        my_regex_2 = r"[., ]" + re.escape(bandname_lowercase_no_accents) + r"[., ]"
-        my_regex_3 = r"[., ]" + re.escape(b['twitterName']) + r"[., ]"
+        my_regex_1 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase) + r"($|\W|(.,'\"?¿¡!;:))"
+        my_regex_2 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase_no_accents) + r"($|\W|(.,'\"?¿¡!;:))"
+        my_regex_3 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(b['twitterName']) + r"($|\W|(.,'\"?¿¡!;:))"
 
         # check if any of the regex's is in the tweet text
         if  re.search(my_regex_1,tweet['tweetText'].lower()) or \
@@ -47,6 +47,9 @@ def extract_bands(tweet, bands):
         #                                                     b['twitterName']]):
         #     bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
 
+    print(tweet['tweetText'])
+    print([b['codedName'] for b in bands_in_tweet])
+
     return bands_in_tweet
 
 
@@ -55,7 +58,10 @@ def band_partition(tweet, new_band_tweets_list, db, connection):
     Function that reads a single tweet info and adds into a list the tweet information partitioned by bands.
     I.e. If a tweet mentions 2 bands, it adds a list of 2 dicts with the tweet info
     """
-    
+
+    # if tweet.name % 1000 == 0:
+    #    print(tweet.name)
+
     # loop all bands and add an entry to the list
     for b in tweet['bands']:
         new_band_tweets_list.append({\

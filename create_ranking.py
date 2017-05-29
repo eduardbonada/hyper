@@ -14,7 +14,6 @@ import helpers
 SETUP DB
 """
 #sqlite_file = 'hyper_live.db'
-#sqlite_file = '/Users/eduard/DeveloperWeb/hyper/hyper_live.db'
 sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
@@ -131,7 +130,7 @@ last_n_rankings = pd.read_sql_query("""
 last_n_rankings['bandCodedName'] = "" # fake name to match columns for a later merge
 
 # add a column indicating ranking position
-new_ranking['ranking_position'] = new_ranking['bf_ibp'].rank(ascending=0)
+new_ranking['ranking_position'] = new_ranking['bf_ibp'].rank(ascending=0, method='first')
 
 # add a column indicating position change compared to last ranking
 if not last_ranking.empty:
@@ -153,12 +152,12 @@ last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (date
 
 if not last_n_rankings.empty:
     # compute accumulated ranking changes
-    cumulated_ranking_changes = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>0].groupby('bandId')['ranking_change'].sum())
+    last_n_rankings[last_n_rankings['ranking_change'] < 0] = 0 # clear negative ranking_changes
+    cumulated_ranking_changes = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
     cumulated_ranking_changes = cumulated_ranking_changes.rename(columns={'ranking_change':'trending_level'})
     cumulated_ranking_changes = cumulated_ranking_changes.reset_index()
 else:
     cumulated_ranking_changes = pd.DataFrame(columns=['bandId', 'trending_level']) # uncomment if historic is empty
-print(cumulated_ranking_changes)
 
 # add trending_level to final ranking by joining dfs
 new_ranking = pd.merge(new_ranking, cumulated_ranking_changes, left_on='bandId', right_on='bandId', how='left')
@@ -179,8 +178,8 @@ LOG
 """
 #print("LAST RANKING\n{}".format(last_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].head(10)))
 #print("NEW RANKING\n{}".format(band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].sort_values('bf_ibp', ascending=False).head(10)))
-print("TOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
-print("TOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
+#print("TOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
+#print("TOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
 
 
 

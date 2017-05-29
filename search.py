@@ -72,7 +72,7 @@ connection.commit()
 # count tweets after searching
 db.execute("SELECT COUNT(*) FROM TweetsRaw")
 tweets_afer = db.fetchone()[0]
-print("{}/{} new tweets in DB".format(tweets_afer-tweets_before, max_tweets))
+print("{} => {}/{} new tweets in DB".format(len(searched_tweets), tweets_afer-tweets_before, max_tweets))
 
 connection.close()
     
