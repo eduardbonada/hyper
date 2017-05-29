@@ -2,6 +2,8 @@
 Script that collects tweets information, pertitions per band, and updates ranking
 """
 
+production = 1
+
 import sqlite3
 import pandas as pd
 import string
@@ -13,8 +15,10 @@ import helpers
 """
 SETUP DB
 """
-#sqlite_file = 'hyper_live.db'
-sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+if production == 0:
+    sqlite_file = 'hyper_live.db'
+else:
+    sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
@@ -25,7 +29,7 @@ LOAD DATA
 
 # get list of bands from db
 bands = pd.read_sql_query("SELECT * FROM Bands;", connection)
-print("{} bands read".format(len(bands)))
+#print("{} bands read".format(len(bands)))
 
 # read ONLY tweets that have to be processed
 tweets_to_process = pd.read_sql_query("SELECT * FROM TweetsRaw WHERE processed IS NULL", connection)
@@ -176,10 +180,11 @@ new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ra
 """
 LOG
 """
-#print("LAST RANKING\n{}".format(last_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].head(10)))
-#print("NEW RANKING\n{}".format(band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].sort_values('bf_ibp', ascending=False).head(10)))
-#print("TOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
-#print("TOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
+if production == 0:
+    #print("LAST RANKING\n{}".format(last_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].head(10)))
+    #print("NEW RANKING\n{}".format(band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].sort_values('bf_ibp', ascending=False).head(10)))
+    print("TOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
+    print("TOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
 
 
 

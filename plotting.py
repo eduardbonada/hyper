@@ -2,12 +2,17 @@
 Script that creates a plot with a tweet timeline
 """
 
+production = 1
+
 import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
 import numpy as np
 import matplotlib as mpl
-mpl.use('Agg') # Force matplotlib to not use any Xwindows backend.
+
+if production == 1: 
+    mpl.use('Agg') # Force matplotlib to not use any Xwindows backend.
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -15,9 +20,10 @@ import seaborn as sns
 """
 SETUP DB
 """
-#sqlite_file = 'hyper_live.db'
-#sqlite_file = '/Users/eduard/DeveloperWeb/hyper/hyper_live.db'
-sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+if production == 0:
+    sqlite_file = 'hyper_live.db'
+else:
+    sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
@@ -81,9 +87,10 @@ ax2.legend()
 
 # store in file
 fig = ax2.get_figure()
-#fig.savefig("tweets.png")
-fig.savefig("/home/ebonada/python/hyper/server/public/images/tweets.png")
-#fig.savefig("/Users/eduard/DeveloperWeb/hyper/public/images/tweets.png")
+if production == 0:
+    fig.savefig("tweets.png")
+else:
+    fig.savefig("/home/ebonada/python/hyper/server/public/images/tweets.png")
 
 
 """
@@ -121,7 +128,8 @@ ax3.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=5)
 
 # store in file
 fig = ax3.get_figure()
-#fig.savefig("rankings.png")
-fig.savefig("/home/ebonada/python/hyper/server/public/images/rankings.png")
-#fig.savefig("/Users/eduard/DeveloperWeb/hyper/public/images/rankings.png")
+if production == 0:
+    fig.savefig("rankings.png")
+else:
+    fig.savefig("/home/ebonada/python/hyper/server/public/images/rankings.png")
 

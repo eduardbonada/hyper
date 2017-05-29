@@ -1,5 +1,8 @@
 import unicodedata
 import re
+from datetime import datetime
+
+production = 1
 
 """
 Create Ranking
@@ -11,11 +14,14 @@ def extract_bands(tweet, bands):
     Returns a list of bands
     """
     
-    #if tweet.name % 1000 == 0:
-    #    print(tweet.name)
+    if production == 0 and tweet.name % 1000 == 0:
+        print("{} => {}".format(tweet.name, str(datetime.now())))
     
     # init list to return
     bands_in_tweet = []
+
+    # prepare the tweet text
+    tweet_text = ''.join((c for c in unicodedata.normalize('NFD', tweet['tweetText'].lower()) if unicodedata.category(c) != 'Mn'))
     
     # loop all bands and check of any of the written forms is present in the tweet text
     for i, b in bands.iterrows():
@@ -23,32 +29,29 @@ def extract_bands(tweet, bands):
         # set different band names writing possibilities
         bandname = b['name']
         bandname_lowercase = bandname.lower()
-        bandname_lowercase_no_spaces = ''.join(bandname_lowercase.split())
-        bandname_lowercase_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase) if unicodedata.category(c) != 'Mn'))
-        bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
+        #bandname_lowercase_no_spaces = ''.join(bandname_lowercase.split())
+        #bandname_lowercase_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase) if unicodedata.category(c) != 'Mn'))
+        #bandname_lowercase_no_spaces_no_accents = ''.join((c for c in unicodedata.normalize('NFD', bandname_lowercase_no_spaces) if unicodedata.category(c) != 'Mn'))
 
         # create regex's
         my_regex_1 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase) + r"($|\W|(.,'\"?¿¡!;:))"
-        my_regex_2 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase_no_accents) + r"($|\W|(.,'\"?¿¡!;:))"
-        my_regex_3 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(b['twitterName']) + r"($|\W|(.,'\"?¿¡!;:))"
+        # my_regex_2 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase_no_accents) + r"($|\W|(.,'\"?¿¡!;:))"
+        my_regex_3 = re.escape(b['twitterName'])
 
         # check if any of the regex's is in the tweet text
-        if  re.search(my_regex_1,tweet['tweetText'].lower()) or \
-            re.search(my_regex_2,tweet['tweetText'].lower()) or \
-            re.search(my_regex_3,tweet['tweetText'].lower()):
-            bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
+        if b['twitterName'] == '@??????':
+            # do not seach for twitter username because it does not exist
+            if  re.search(my_regex_1,tweet['tweetText'].lower()):
+                bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
 
-        # if any(s in tweet['tweetText'].lower() for s in [   " {} ".format(bandname_lowercase), 
-        #                                                     " {} ".format(bandname_lowercase_no_accents), 
-        #                                                     "{},".format(bandname_lowercase), 
-        #                                                     "{},".format(bandname_lowercase_no_accents), 
-        #                                                     ",{}".format(bandname_lowercase), 
-        #                                                     ",{}".format(bandname_lowercase_no_accents),
-        #                                                     b['twitterName']]):
-        #     bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
+        else:
+            if  re.search(my_regex_1, tweet_text) or \
+                re.search(my_regex_3, tweet_text):
+                bands_in_tweet.append({"id": b['id'], "codedName": b['codedName']})
 
-    print(tweet['tweetText'])
-    print([b['codedName'] for b in bands_in_tweet])
+    # if production == 0:
+    #     print(tweet['tweetText'].lower())
+    #     print([b['codedName'] for b in bands_in_tweet])
 
     return bands_in_tweet
 
@@ -59,8 +62,8 @@ def band_partition(tweet, new_band_tweets_list, db, connection):
     I.e. If a tweet mentions 2 bands, it adds a list of 2 dicts with the tweet info
     """
 
-    # if tweet.name % 1000 == 0:
-    #    print(tweet.name)
+    if production == 0 and tweet.name % 1000 == 0:
+        print("{} => {}".format(tweet.name, str(datetime.now())))
 
     # loop all bands and add an entry to the list
     for b in tweet['bands']:

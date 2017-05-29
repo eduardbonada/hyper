@@ -2,6 +2,8 @@
 Script that listens tweets from the Twitter Streaming API (according to searching query) and stores them into the given sqlite db
 """
 
+production = 1
+
 # https://marcobo# https://www.dataquest.io/blog/streaming-data-python/
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
 # http://adilmoujahid.com/posts/2014/07/twitter-analytics/
@@ -12,9 +14,13 @@ import sqlite3
 from datetime import datetime
 from pprint import pprint
 
-# Setup sqlite
-#sqlite_file = 'hyper_live.db'
-sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+# SETUP DB
+if production == 0:
+    sqlite_file = 'hyper_live.db'
+else:
+    sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+connection = sqlite3.connect(sqlite_file)
+db = connection.cursor()
 
 # track number of tweets (developing purposes)
 max_tweets_to_store = -1 # maximum number of tweets to store before shutting down the streaming (-1 for non stop)

@@ -2,6 +2,8 @@
 Script that searches tweets according to searching query and stores them into the given sqlite db
 """
 
+production = 1
+
 import tweepy
 import sqlite3
 from datetime import datetime
@@ -16,12 +18,16 @@ consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
 consumer_secret = 'TuTQKld9os111vx7oMSM3PTfoNz9dZDcnACxIvHGL9euIvLE8I'
 access_token = '74265344-UOJgWD9vzB9wJvgnet3f63bkQdJ0rLGz9gg67fqDP'
 access_secret = '4AFqod7kCScnSDf9OcgmVeIdnxwa9ZKn9pwwFMBbpLi7u'
-
-# Setup sqlite
-#sqlite_file = 'hyper.db'
-sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
+
+# Setup sqlite
+if production == 0:
+    sqlite_file = 'hyper_live.db'
+else:
+    sqlite_file = '/home/ebonada/python/hyper/hyper_live.db'
+connection = sqlite3.connect(sqlite_file)
+db = connection.cursor()
 
 # Create tweepy instance
 api = tweepy.API(auth)
@@ -44,7 +50,7 @@ for st in searched_tweets:
     try:
         tweet_info = st._json;
 
-        # print("Inserting tweet {} => {}, {}".format(tweet_info['id_str'],tweet_info['text'],tweet_info['user']['location']))
+        #print("{} => {}".format(tweet_info['created_at'], tweet_info['text']))
 
         db.execute("""INSERT OR IGNORE INTO TweetsRaw (tweetId,createdAt,storedAt,tweetText,favsCount,rtsCount,language,userFriendsCount,userId,userFollowersCount,userStatusesCount,userFavsCount,userLocation) \
                     VALUES ('{tweetId}','{createdAt}','{storedAt}','{tweetText}','{favsCount}','{rtsCount}','{language}','{userId}','{userFriendsCount}','{userFollowersCount}','{userStatusesCount}','{userFavsCount}','{userLocation}')""".format(\

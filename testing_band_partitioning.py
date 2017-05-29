@@ -27,7 +27,7 @@ bands = pd.read_sql_query("SELECT * FROM Bands;", connection)
 print("{} bands read".format(len(bands)))
 
 # read ONLY tweets that have to be processed
-tweets_to_process = pd.read_sql_query("SELECT * FROM TweetsRaw WHERE tweetText LIKE '%elza%' LIMIT 100", connection)
+tweets_to_process = pd.read_sql_query("SELECT * FROM TweetsRaw WHERE tweetText LIKE '%soledad%' LIMIT 100", connection)
 print("{} tweets to be processed".format(len(tweets_to_process)))
 
 
