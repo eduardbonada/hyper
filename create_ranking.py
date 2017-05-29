@@ -153,11 +153,12 @@ last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (date
 
 if not last_n_rankings.empty:
     # compute accumulated ranking changes
-    cumulated_ranking_changes = pd.DataFrame(last_n_rankings.groupby('bandId')['ranking_change'].sum())
+    cumulated_ranking_changes = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>0].groupby('bandId')['ranking_change'].sum())
     cumulated_ranking_changes = cumulated_ranking_changes.rename(columns={'ranking_change':'trending_level'})
     cumulated_ranking_changes = cumulated_ranking_changes.reset_index()
 else:
     cumulated_ranking_changes = pd.DataFrame(columns=['bandId', 'trending_level']) # uncomment if historic is empty
+print(cumulated_ranking_changes)
 
 # add trending_level to final ranking by joining dfs
 new_ranking = pd.merge(new_ranking, cumulated_ranking_changes, left_on='bandId', right_on='bandId', how='left')
