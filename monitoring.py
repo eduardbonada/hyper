@@ -27,6 +27,7 @@ else:
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
+print("<html><body><pre>");
 
 # Top ranked and top trending
 ranking = pd.read_sql_query("SELECT * FROM BandsHype AS bh LEFT JOIN Bands AS b ON bh.bandId = b.id", connection)
@@ -81,7 +82,7 @@ try:
 	print("\n\n********************\nCRON SEARCH LOG\n")
 	with open(cron_search_file) as fid:
 	    lines = fid.readlines()
-	for line in lines[len(lines)-50:]:
+	for line in lines[len(lines)-10:]:
 	    print(line, end='')
 	if len(lines) >= 10:
 		os.remove(cron_search_file) 
@@ -96,4 +97,5 @@ try:
 except:
 	print('ERROR: Some problem with the cron log files')
 
+print("</html></body></pre>");
 
