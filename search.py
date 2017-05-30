@@ -6,6 +6,7 @@ production = 1
 
 import tweepy
 import sqlite3
+import pandas as pd
 from datetime import datetime
 from pprint import pprint
 
@@ -78,7 +79,11 @@ connection.commit()
 # count tweets after searching
 db.execute("SELECT COUNT(*) FROM TweetsRaw")
 tweets_afer = db.fetchone()[0]
-print("{} => {}/{} new tweets in DB".format(len(searched_tweets), tweets_afer-tweets_before, max_tweets))
+print("{} => {}/{} new tweets in DB".format(max_tweets, tweets_afer-tweets_before, len(searched_tweets)))
+
+# print last 5 searched tweets
+last_tweets = pd.read_sql_query("SELECT * FROM TweetsRaw ORDER BY id DESC LIMIT {}".format(tweets_afer-tweets_before), connection)
+print(last_tweets[['createdAt', 'tweetText']])
 
 connection.close()
     
