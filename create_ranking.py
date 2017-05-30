@@ -156,7 +156,8 @@ last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (date
 
 if not last_n_rankings.empty:
     # compute accumulated ranking changes
-    last_n_rankings[last_n_rankings['ranking_change'] < 0] = 0 # clear negative ranking_changes
+    if last_n_rankings[last_n_rankings['ranking_change'] == -1].shape[0] > 0:
+        last_n_rankings.loc[last_n_rankings['ranking_change'] == -1, 'ranking_change'] = 0 # clear negative ranking_changes
     cumulated_ranking_changes = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
     cumulated_ranking_changes = cumulated_ranking_changes.rename(columns={'ranking_change':'trending_level'})
     cumulated_ranking_changes = cumulated_ranking_changes.reset_index()
@@ -183,8 +184,8 @@ LOG
 if production == 0:
     #print("LAST RANKING\n{}".format(last_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].head(10)))
     #print("NEW RANKING\n{}".format(band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].sort_values('bf_ibp', ascending=False).head(10)))
-    print("TOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
-    print("TOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
+    print("\nTOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
+    print("\nTOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
 
 
 

@@ -27,6 +27,7 @@ else:
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
+print("<html><body><pre>");
 
 # Top ranked and top trending
 ranking = pd.read_sql_query("SELECT * FROM BandsHype AS bh LEFT JOIN Bands AS b ON bh.bandId = b.id", connection)
@@ -96,4 +97,5 @@ try:
 except:
 	print('ERROR: Some problem with the cron log files')
 
+print("</html></body></pre>");
 
