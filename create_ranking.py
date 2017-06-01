@@ -152,30 +152,46 @@ last_n_rankings = pd.concat([last_n_rankings, new_ranking])
 
 # filter rankings of only last hour
 last_n_rankings['createdAt_datetime'] = pd.to_datetime(last_n_rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
-last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (datetime.now() - timedelta(hours=1))]
+last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (datetime.now() - timedelta(hours=10))]
 
+# compute trending_level as tweets during the window defined by last_n_rankings
 if not last_n_rankings.empty:
-    # compute accumulated ranking changes
-    if last_n_rankings[last_n_rankings['ranking_change'] == -1].shape[0] > 0:
-        last_n_rankings.loc[last_n_rankings['ranking_change'] == -1, 'ranking_change'] = 0 # clear negative ranking_changes
-    cumulated_ranking_changes = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
-    cumulated_ranking_changes = cumulated_ranking_changes.rename(columns={'ranking_change':'trending_level'})
-    cumulated_ranking_changes = cumulated_ranking_changes.reset_index()
+    data_start_window = last_n_rankings[['bandId', 'tweets', 'favs', 'retweets', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=True).groupby('bandId').head(1)
+    data_end_window = last_n_rankings[['bandId', 'tweets', 'favs', 'retweets', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=False).groupby('bandId').head(1)
+
+    trending_level = pd.merge(data_start_window, data_end_window, left_on='bandId', right_on='bandId', how='left')
+    trending_level['trending_level'] = trending_level['tweets_y'] - trending_level['tweets_x']
+
+    # print(trending_level[['bandId', 'trending_level']].sort_values('trending_level', ascending=False ))
+
 else:
-    cumulated_ranking_changes = pd.DataFrame(columns=['bandId', 'trending_level']) # uncomment if historic is empty
+    trending_level = pd.DataFrame(columns=['bandId', 'trending_level'])
+
+
+# # compute trending_level as accumulated ranking changes during last_n_rankings
+# if not last_n_rankings.empty:
+#     if last_n_rankings[last_n_rankings['ranking_change'] == -1].shape[0] > 0:
+#         last_n_rankings.loc[last_n_rankings['ranking_change'] == -1, 'ranking_change'] = 0 # clear negative ranking_changes
+#     trending_level = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
+#     trending_level = trending_level.rename(columns={'ranking_change':'trending_level'})
+#     trending_level = trending_level.reset_index()
+# else:
+#     trending_level = pd.DataFrame(columns=['bandId', 'trending_level'])
 
 # add trending_level to final ranking by joining dfs
-new_ranking = pd.merge(new_ranking, cumulated_ranking_changes, left_on='bandId', right_on='bandId', how='left')
+new_ranking = pd.merge(new_ranking, trending_level, left_on='bandId', right_on='bandId', how='left')
+
+
 
 
 """
 PERSIST TO DB
 """
 # table with current ranking
-new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+#new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].to_sql("BandsHype", connection, if_exists="replace", index=False)
 
 # table with historical of rankings
-new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+#new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
 
 """

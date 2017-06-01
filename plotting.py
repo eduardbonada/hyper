@@ -63,37 +63,38 @@ rankings = pd.read_sql_query("""SELECT b.codedName AS bandCodedName, rs.bf_ibp, 
 PLOT WITH ALL TWEETS
 """
 
-# timeline plot comparing alltweets vs bandtweets
+# # timeline plot comparing alltweets vs bandtweets
 fig = plt.figure()
-ax1 = fig.add_subplot(211)
-all_tweets.resample('D').count()['tweetId'].plot(kind='bar', \
-                                                 color=sns.xkcd_rgb['sky'], \
-                                                 label='All', \
-                                                 ax=ax1)
-band_tweets.resample('D').count()['bandId'].plot(kind='bar', \
-                                                 color=sns.xkcd_rgb['green'], \
-                                                 label='Bands', \
-                                                 ax=ax1)
-ax1.set_title(datetime.now().strftime("%H:%M:%S %d/%m/%Y"))
-ax1.set_xlabel("All Days")
-ax1.set_xticklabels([])
-#ax1.set_xticklabels(list(np.arange(min(all_tweets['createdAt']).day, max(all_tweets['createdAt']).day + 1)), rotation=None)
-ax1.set_ylabel("Tweets")
-ax1.legend()
+# ax1 = fig.add_subplot(211)
+# all_tweets.resample('D').count()['tweetId'].plot(kind='bar', \
+#                                                  color=sns.xkcd_rgb['sky'], \
+#                                                  label='All', \
+#                                                  ax=ax1)
+# band_tweets.resample('D').count()['bandId'].plot(kind='bar', \
+#                                                  color=sns.xkcd_rgb['green'], \
+#                                                  label='Bands', \
+#                                                  ax=ax1)
+# ax1.set_title(datetime.now().strftime("%H:%M:%S %d/%m/%Y"))
+# ax1.set_xlabel("All Days")
+# ax1.set_xticklabels([])
+# #ax1.set_xticklabels(list(np.arange(min(all_tweets['createdAt']).day, max(all_tweets['createdAt']).day + 1)), rotation=None)
+# ax1.set_ylabel("Tweets")
+# ax1.legend()
 
 
 """
 PLOT WITH RECENT TWEETS
 """
 
-hours_plot = 24
+hours_plot = 12
 
 # get recent tweets (last 24h)
 recent_all_tweets = all_tweets[ all_tweets['createdAt'] > (datetime.now() - timedelta(hours=hours_plot))]
 recent_band_tweets = band_tweets[ band_tweets['createdAt'] > (datetime.now() - timedelta(hours=hours_plot))]
 
 # plot last day of tweets & band_tweets
-ax2 = fig.add_subplot(212)
+#ax2 = fig.add_subplot(212)
+ax2 = fig.add_subplot(111)
 ax2 = recent_all_tweets.resample('H').count()['tweetId'].plot(kind='bar', color=sns.xkcd_rgb['sky'], label='All', ax=ax2)
 recent_band_tweets.resample('H').count()['bandId'].plot(kind='bar', color=sns.xkcd_rgb['green'], label='Bands', ax=ax2)
 ax2.set_xlabel("Last {}h".format(hours_plot))
@@ -113,7 +114,7 @@ else:
 PLOT WITH RANKING EVOLUTION (BF_IBP)
 """
 
-hours_plot = 24
+hours_plot = 12
 
 # filter last N-hours
 rankings['createdAt'] = pd.to_datetime(rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
@@ -145,7 +146,7 @@ else:
 PLOT WITH RANKING EVOLUTION (POSITION)
 """
 
-hours_plot = 24
+hours_plot = 12
 
 # filter last N-hours
 rankings['createdAt'] = pd.to_datetime(rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
