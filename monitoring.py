@@ -82,10 +82,10 @@ try:
 	print("\n\n********************\nCRON SEARCH LOG\n")
 	with open(cron_search_file) as fid:
 	    lines = fid.readlines()
-	for line in lines[len(lines)-10:]:
+	for line in lines:[len(lines)-8:]:
 	    print(line, end='')
-	if len(lines) >= 10:
-		os.remove(cron_search_file) 
+	#if len(lines) >= 10:
+	#	os.remove(cron_search_file) 
 
 	print("\n\n********************\nCRON PLOTTING LOG\n")
 	with open(cron_plotting_file) as fid:
