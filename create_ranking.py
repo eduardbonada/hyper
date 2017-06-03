@@ -117,6 +117,8 @@ new_ranking['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(new_ranking['
 COMPUTE CHANGES IN RANKING
 """
 
+last_n_rankings_minutes = 30
+
 # Get last ranking
 last_ranking = pd.read_sql_query("""
                                     SELECT * 
@@ -152,31 +154,34 @@ last_n_rankings = pd.concat([last_n_rankings, new_ranking])
 
 # filter rankings of only last hour
 last_n_rankings['createdAt_datetime'] = pd.to_datetime(last_n_rankings['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y')
-last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (datetime.now() - timedelta(hours=10))]
+last_n_rankings = last_n_rankings[ last_n_rankings['createdAt_datetime'] > (datetime.now() - timedelta(minutes=last_n_rankings_minutes))]
 
-# # compute trending_level as tweets during the window defined by last_n_rankings
-# if not last_n_rankings.empty:
-#     data_start_window = last_n_rankings[['bandId', 'tweets', 'favs', 'retweets', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=True).groupby('bandId').head(1)
-#     data_end_window = last_n_rankings[['bandId', 'tweets', 'favs', 'retweets', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=False).groupby('bandId').head(1)
-
-#     trending_level = pd.merge(data_start_window, data_end_window, left_on='bandId', right_on='bandId', how='left')
-#     trending_level['trending_level'] = trending_level['tweets_y'] - trending_level['tweets_x']
-
-#     # print(trending_level[['bandId', 'trending_level']].sort_values('trending_level', ascending=False ))
-
-# else:
-#     trending_level = pd.DataFrame(columns=['bandId', 'trending_level'])
-
-
-# compute trending_level as accumulated ranking changes during last_n_rankings
+# compute trending_level as tweets during the window defined by last_n_rankings
 if not last_n_rankings.empty:
-    if last_n_rankings[last_n_rankings['ranking_change'] == -1].shape[0] > 0:
-        last_n_rankings.loc[last_n_rankings['ranking_change'] == -1, 'ranking_change'] = 0 # clear negative ranking_changes
-    trending_level = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
-    trending_level = trending_level.rename(columns={'ranking_change':'trending_level'})
-    trending_level = trending_level.reset_index()
+    data_start_window = last_n_rankings[['bandId', 'tweets', 'bf_ibp', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=True).groupby('bandId').head(1)
+    data_end_window = last_n_rankings[['bandId', 'tweets', 'bf_ibp', 'createdAt_datetime']].sort_values('createdAt_datetime', ascending=False).groupby('bandId').head(1)
+
+    # print(data_start_window[data_start_window['bandId'] == 21]);
+    # print(data_end_window[data_end_window['bandId'] == 21]);
+
+    trending_level = pd.merge(data_start_window, data_end_window, left_on='bandId', right_on='bandId', how='left')
+    trending_level['trending_level'] = trending_level['bf_ibp_y'] - trending_level['bf_ibp_x']
+
+    #print(trending_level[trending_level['bandId'] == 21][['bandId', 'trending_level']].sort_values('trending_level', ascending=False ))
+
 else:
     trending_level = pd.DataFrame(columns=['bandId', 'trending_level'])
+
+
+# # compute trending_level as accumulated ranking changes during last_n_rankings
+# if not last_n_rankings.empty:
+#     if last_n_rankings[last_n_rankings['ranking_change'] == -1].shape[0] > 0:
+#         last_n_rankings.loc[last_n_rankings['ranking_change'] == -1, 'ranking_change'] = 0 # clear negative ranking_changes
+#     trending_level = pd.DataFrame(last_n_rankings[last_n_rankings['ranking_change']>=0].groupby('bandId')['ranking_change'].sum())
+#     trending_level = trending_level.rename(columns={'ranking_change':'trending_level'})
+#     trending_level = trending_level.reset_index()
+# else:
+#     trending_level = pd.DataFrame(columns=['bandId', 'trending_level'])
 
 # add trending_level to final ranking by joining dfs
 new_ranking = pd.merge(new_ranking, trending_level, left_on='bandId', right_on='bandId', how='left')

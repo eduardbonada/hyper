@@ -7,6 +7,7 @@ production = 1
 import sqlite3
 import pandas as pd
 import os
+from datetime import datetime
 
 # files
 # cron_ranking_file = 'cron_ranking.log'
@@ -28,6 +29,8 @@ connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 print("<html><body><pre>");
+
+print(datetime.now().strftime('%Y-%m-%d %H:%M:%S %z'))
 
 # Top ranked and top trending
 ranking = pd.read_sql_query("SELECT * FROM BandsHype AS bh LEFT JOIN Bands AS b ON bh.bandId = b.id", connection)
