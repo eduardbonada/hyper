@@ -10,7 +10,7 @@ from pprint import pprint
 import sys	
 
 # Setup sqlite
-sqlite_file = 'hyper_live.db'
+sqlite_file = 'hyper_thu-sat.db'
 
 # Connect to the database sqlite file
 connection = sqlite3.connect(sqlite_file)

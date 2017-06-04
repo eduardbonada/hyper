@@ -271,4 +271,7 @@
 	{"headLevel": 3, "id": 272, "twitter": "@theradiodept", "name": "The Radio Dept.", "popularity": 34},
 	{"headLevel": 3, "id": 273, "twitter": "@lawrencearabia", "name": "Lawrence Arabia", "popularity": 34},
 	{"headLevel": 3, "id": 274, "twitter": "@surfinbichos", "name": "Surfin' Bichos", "popularity": 34},
-	{"headLevel": 3, "id": 275, "twitter": "@nowjazznow", "name": "Thurston Moore", "popularity": 34}]
+	{"headLevel": 3, "id": 275, "twitter": "@nowjazznow", "name": "Thurston Moore", "popularity": 34},
+	{"headLevel": 3, "id": 276, "twitter": "@haimtheband", "name": "Haim", "popularity": 34},
+	{"headLevel": 3, "id": 277, "twitter": "@mogwaiband", "name": "Mogwai", "popularity": 34}
+]
