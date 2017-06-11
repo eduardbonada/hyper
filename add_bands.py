@@ -10,14 +10,14 @@ from pprint import pprint
 import sys	
 
 # Setup sqlite
-sqlite_file = 'hyper_thu-sat.db'
+sqlite_file = 'hyper_live.db'
 
 # Connect to the database sqlite file
 connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 # collect list of bands
-json_data=open('bands_new.json').read()
+json_data=open('sonar_bands.json').read()
 bands = json.loads(json_data)
 #pprint(bands)
 
@@ -44,7 +44,7 @@ for b in bands:
 				        name=bandname.replace("'","''"), \
 				        codedName=bandname_lowercase_no_spaces_no_accents.replace("'","''"), \
 				        twitterName=b['twitter'], \
-				        headLevel=b['headLevel'], \
+				        headLevel='', \
 				        popularity=b['popularity'])
 		)
 		connection.commit()
