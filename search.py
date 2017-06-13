@@ -11,8 +11,8 @@ from datetime import datetime
 from pprint import pprint
 
 # script parameters
-query = 'primavera sound'
-max_tweets = 200
+query = '#sonar2017'
+max_tweets = 100
 
 # Setup twitter API access
 consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
