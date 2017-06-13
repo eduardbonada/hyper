@@ -51,15 +51,21 @@ print("    Band Tweets: {}".format(num_band_tweets))
 
 
 # List of last N tweets
-tweetsRaw = pd.read_sql_query("SELECT * FROM TweetsRaw ORDER BY id DESC LIMIT 3", connection)
+tweetsRaw = pd.read_sql_query("SELECT * FROM TweetsRaw ORDER BY id DESC LIMIT 5", connection)
 tweetsRaw['createdAt'] = pd.to_datetime(tweetsRaw['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y').dt.strftime('%d %H:%M')
 print("\n\n********************\nLAST TWEETS\n\n{}".format(tweetsRaw[['createdAt', 'tweetText']].values))
 
 
 # List of last N band tweets
-bandTweets = pd.read_sql_query("SELECT * FROM BandTweets AS bt LEFT JOIN TweetsRaw AS tr ON bt.tweetRawId = tr.id ORDER BY tr.id DESC LIMIT 3", connection)
+bandTweets = pd.read_sql_query("SELECT * FROM BandTweets AS bt LEFT JOIN TweetsRaw AS tr ON bt.tweetRawId = tr.id ORDER BY tr.id DESC LIMIT 5", connection)
 bandTweets['createdAt'] = pd.to_datetime(bandTweets['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y').dt.strftime('%d %H:%M')
 print("\n\n********************\nLAST BAND TWEETS\n\n{}".format(bandTweets[['createdAt', 'tweetText']].values))
+
+
+# List of last N tweets without bands detected
+noBandTweets = pd.read_sql_query("SELECT * FROM TweetsRaw AS tr LEFT JOIN BandTweets AS bt ON tr.id = bt.tweetRawId WHERE bt.tweetRawId IS NULL ORDER BY tr.id DESC LIMIT 5", connection)
+noBandTweets['createdAt'] = pd.to_datetime(noBandTweets['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y').dt.strftime('%d %H:%M')
+print("\n\n********************\nLAST 'NO' BAND TWEETS\n\n{}".format(noBandTweets[['createdAt', 'tweetText']].values))
 
 
 # Last streamed tweets

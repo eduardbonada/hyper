@@ -109,7 +109,8 @@ new_ranking = new_ranking.rename(columns={'favsCount':'favs', 'rtsCount':'retwee
 new_ranking = new_ranking[['bandId', 'bandCodedName', 'tweets', 'favs', 'retweets', 'createdAt', 'popularity']]
 
 # Compute BF-IBP (Band Frequency - Inverse Band Popularity)
-bf_numerator = new_ranking['tweets']*(1 + new_ranking['favs'] + new_ranking['retweets'])
+#bf_numerator = new_ranking['tweets']*(1 + new_ranking['favs'] + new_ranking['retweets'])
+bf_numerator = new_ranking['tweets']*(1 + new_ranking['favs'])
 new_ranking['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(new_ranking['popularity'].astype(float) + 1)
 
 
@@ -117,7 +118,7 @@ new_ranking['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(new_ranking['
 COMPUTE CHANGES IN RANKING
 """
 
-last_n_rankings_minutes = 30
+last_n_rankings_minutes = 120
 
 # Get last ranking
 last_ranking = pd.read_sql_query("""
