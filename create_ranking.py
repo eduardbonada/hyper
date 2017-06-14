@@ -110,7 +110,8 @@ new_ranking = new_ranking[['bandId', 'bandCodedName', 'tweets', 'favs', 'retweet
 
 # Compute BF-IBP (Band Frequency - Inverse Band Popularity)
 #bf_numerator = new_ranking['tweets']*(1 + new_ranking['favs'] + new_ranking['retweets'])
-bf_numerator = new_ranking['tweets']*(1 + np.log(new_ranking['favs'])
+#bf_numerator = new_ranking['tweets'] + np.log(1+new_ranking['retweets']) + np.log(1+new_ranking['favs'])
+bf_numerator = new_ranking['tweets']
 new_ranking['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(new_ranking['popularity'].astype(float) + 1)
 
 
@@ -118,7 +119,10 @@ new_ranking['bf_ibp'] = (bf_numerator/bf_numerator.sum()) * np.log(new_ranking['
 COMPUTE CHANGES IN RANKING
 """
 
-last_n_rankings_minutes = 120
+last_n_rankings_minutes = 60
+if production == 0:
+	# add 2h due to hour difference between local and server
+	last_n_rankings_minutes = last_n_rankings_minutes + 120
 
 # Get last ranking
 last_ranking = pd.read_sql_query("""
@@ -192,11 +196,13 @@ new_ranking = pd.merge(new_ranking, trending_level, left_on='bandId', right_on='
 """
 PERSIST TO DB
 """
-# table with current ranking
-new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+if production == 1:
 
-# table with historical of rankings
-new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
+	# table with current ranking
+	new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].to_sql("BandsHype", connection, if_exists="replace", index=False)
+
+	# table with historical of rankings
+	new_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level','createdAt']].to_sql("BandsHypeHis", connection, if_exists="append", index=False)
 
 
 """
@@ -205,8 +211,8 @@ LOG
 if production == 0:
     #print("LAST RANKING\n{}".format(last_ranking[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].head(10)))
     #print("NEW RANKING\n{}".format(band_hypes[['bandId','tweets','favs','retweets','bf_ibp','ranking_position','ranking_change','trending_level']].sort_values('bf_ibp', ascending=False).head(10)))
-    print("\nTOP RANKED\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('ranking_position', ascending=True).head(10)))
-    print("\nTOP TRENDING\n{}".format(new_ranking[['bandCodedName','ranking_position','ranking_change','trending_level']].sort_values('trending_level', ascending=False).head(10)))
+    print("\nTOP RANKED\n{}".format(new_ranking[['bandCodedName','tweets','favs','retweets','bf_ibp','ranking_position']].sort_values('ranking_position', ascending=True).head(10)))
+    print("\nTOP TRENDING\n{}".format(new_ranking[['bandCodedName','tweets','favs','retweets','bf_ibp','trending_level']].sort_values('trending_level', ascending=False).head(10)))
 
 
 

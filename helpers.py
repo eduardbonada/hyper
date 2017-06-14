@@ -36,7 +36,7 @@ def extract_bands(tweet, bands):
         # create regex's
         my_regex_1 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase) + r"($|\W|(.,'\"?¿¡!;:))"
         # my_regex_2 = r"(^|\W|(.,'\"?¿¡!;:))" + re.escape(bandname_lowercase_no_accents) + r"($|\W|(.,'\"?¿¡!;:))"
-        my_regex_3 = re.escape(b['twitterName'])
+        my_regex_3 = re.escape(b['twitterName'].lower())
 
         # check if any of the regex's is in the tweet text
         if b['twitterName'] == '@??????':
