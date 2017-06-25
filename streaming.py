@@ -106,6 +106,6 @@ twitter_stream = tweepy.Stream(auth, TweetsListener())
 
 # Launch streaming
 print("Streaming running...");
-twitter_stream.filter(track=['#sonar2017', '@SonarFestival'])
+twitter_stream.filter(track=['#VidaFestival2017'])
 
 

@@ -11,8 +11,8 @@ from datetime import datetime
 from pprint import pprint
 
 # script parameters
-query = '#sonar2017'
-max_tweets = 100
+query = '#VidaFestival2017'
+max_tweets = 50
 
 # Setup twitter API access
 consumer_key = 'Ib3yDL5HYSLxAqENZ6QCHRFex'
@@ -86,7 +86,7 @@ tweets_to_print = tweets_afer-tweets_before
 if tweets_to_print > 0:
 	last_tweets = pd.read_sql_query("SELECT * FROM TweetsRaw ORDER BY id DESC LIMIT {}".format(tweets_to_print), connection)
 	last_tweets['createdAt'] = pd.to_datetime(last_tweets['createdAt'], format ='%a %b %d %H:%M:%S +0000 %Y').dt.strftime('%d %H:%M')
-	out_string = out_String + '[' + str(max(last_tweets['createdAt'].values.tolist())) + ']'
+	out_string = out_string + '[' + str(max(last_tweets['createdAt'].values.tolist())) + ']'
 
 print(out_string)
 

@@ -17,7 +17,7 @@ connection = sqlite3.connect(sqlite_file)
 db = connection.cursor()
 
 # collect list of bands
-json_data=open('sonar_bands.json').read()
+json_data=open('vida_bands.json').read()
 bands = json.loads(json_data)
 #pprint(bands)
 
